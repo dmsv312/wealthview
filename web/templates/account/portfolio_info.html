@@ -1,0 +1,43 @@
+{% load static %}
+{% load backtest %}
+{% load account %}
+
+<div class="line1 line">
+    <div style="display: flex; flex-flow: column">
+        <div class="sd_title_block">
+            {% if ptf_total_cash %}  <span>общая стоимость: {{ ptf_total_cash|floatformat:2 }}</span> {% endif %}
+        </div>
+    </div>
+    <div class="made_operation">
+        <a href="#modal_made_operation" class="blue_btn js-modal-inner">Добавить транзакцию</a>
+    </div>
+</div>
+
+<div class="line2 line">
+    <div class="table_account-portfolios_scroll">
+        <div class="table table_account-portfolios">
+            <div class="table_line bg_dark">
+                <div></div>
+                <div class="ossb table_th">тикер</div>
+                <div class="ossb table_th">текущая <br> цена</div>
+                <div class="ossb table_th">cр. цена <br> покупки</div>
+                <div class="ossb table_th">количество</div>
+                <div class="ossb table_th">% <br> от портфеля</div>
+                <div class="ossb table_th">сумма <br> инвестиций</div>
+                <div class="ossb table_th">текущая <br> стоимость</div>
+                <div class="ossb table_th">изменение <br> (%)
+                </div>
+            </div>
+            {% if open_positions %}
+            {% include "account/open_positions_detail.html"  with asset_type="Акции" open_positions=open_positions|filter_open_positions:"ST" %}
+            {% include "account/open_positions_detail.html" with asset_type="ETF" open_positions=open_positions|filter_open_positions:"ET" %}
+            {% include "account/open_positions_detail.html" with asset_type="Денежные средства" open_positions=open_positions|filter_open_positions:"CS" %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="line3 line">
+    <div class="sd_title_block sd_title_block_bottom">
+        <span>Данные по текущим ценам активов могут быть предоставлены с задержкой 15 минут</span>
+    </div>
+</div>

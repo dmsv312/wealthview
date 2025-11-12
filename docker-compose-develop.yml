@@ -1,0 +1,98 @@
+version: '3'
+
+services:
+  celery-beat:
+    restart: always
+    image: wealthview-web
+    command: celery beat --app=WealthView --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    container_name: celery-beat
+    ports:
+      - "127.0.0.1:8385:8000"
+    environment:
+      ENVIRONMENT: DEVELOP
+      DATABASE_NAME: wealthview_develop
+      DATABASE_USER_NAME: postgres
+      DATABASE_PASSWORD: hjHgesh5oycPqS4xlCVXstM6kcN40q
+      DATABASE_HOST: 212.109.219.243
+      DATABASE_PORT: 5432
+      WEB_HOST: http://212.109.219.243
+      BOT_TOKEN: 1393308752:AAHHfmGSpUCW9zdnmmIcz2-TzgHU_um9TdM
+      BOT_SECRET: makSDMNN0idnwa0din20f029f0as9nd0iasnd0i239d23
+      SENTRY_DSN: https://cf8a28f1e8e143d4b6a0dc2ea672ea8c@o447908.ingest.sentry.io/5569912
+    depends_on:
+      - web
+  celery-worker:
+    restart: always
+    image: wealthview-web
+    command: celery worker --app=WealthView --autoscale=6,2
+    container_name: celery-worker
+    ports:
+      - "127.0.0.1:8384:8000"
+    environment:
+      ENVIRONMENT: DEVELOP
+      DATABASE_NAME: wealthview_develop
+      DATABASE_USER_NAME: postgres
+      DATABASE_PASSWORD: hjHgesh5oycPqS4xlCVXstM6kcN40q
+      DATABASE_HOST: 212.109.219.243
+      DATABASE_PORT: 5432
+      WEB_HOST: http://212.109.219.243
+      BOT_TOKEN: 1393308752:AAHHfmGSpUCW9zdnmmIcz2-TzgHU_um9TdM
+      BOT_SECRET: makSDMNN0idnwa0din20f029f0as9nd0iasnd0i239d23
+      SENTRY_DSN: https://cf8a28f1e8e143d4b6a0dc2ea672ea8c@o447908.ingest.sentry.io/5569912
+    depends_on:
+      - web
+  bot:
+    restart: always
+    image: wealthview-web
+    command: python WealthView/bot.py
+    container_name: bot
+    depends_on:
+      - web
+    links:
+      - web:web
+    ports:
+      - "127.0.0.1:8383:8000"
+    environment:
+      WEB_HOST: http://212.109.219.243
+      BOT_TOKEN: 1393308752:AAHHfmGSpUCW9zdnmmIcz2-TzgHU_um9TdM
+      BOT_SECRET: makSDMNN0idnwa0din20f029f0as9nd0iasnd0i239d23
+      SENTRY_DSN: https://ca398745cf24405380d1fe7da4832039@o447908.ingest.sentry.io/5478722
+  web:
+    restart: always
+    build: web
+    image: wealthview-web
+    container_name: web
+    command: gunicorn WealthView.wsgi:application --bind 0.0.0.0:8000 --workers 3 --threads 2 --worker-connections 1000 --timeout 60
+    volumes:
+      - ./web:/code
+      - media:/code/media/media
+    privileged: true
+    ports:
+      - "8080:8000"
+    environment:
+      ENVIRONMENT: DEVELOP
+      DATABASE_NAME: wealthview_develop
+      DATABASE_USER_NAME: postgres
+      DATABASE_PASSWORD: hjHgesh5oycPqS4xlCVXstM6kcN40q
+      DATABASE_HOST: 212.109.219.243
+      DATABASE_PORT: 5432
+      REQUESTS_LOG_ENABLED: 1
+      BOT_TOKEN: 1393308752:AAHHfmGSpUCW9zdnmmIcz2-TzgHU_um9TdM
+      BOT_SECRET: makSDMNN0idnwa0din20f029f0as9nd0iasnd0i239d23
+      BOT_USERNAME: wealthviewbot
+      SENTRY_DSN: https://ca398745cf24405380d1fe7da4832039@o447908.ingest.sentry.io/5478722
+    depends_on:
+        - redis
+    links:
+        - redis:redis
+  redis:
+    restart: always
+    image: redis:6.0-buster
+    container_name: redis
+    ports:
+      - '6385:6379'
+    sysctls:
+      net.core.somaxconn: '65535'
+
+volumes:
+  media:

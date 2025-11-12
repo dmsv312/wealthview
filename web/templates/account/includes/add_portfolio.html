@@ -1,0 +1,89 @@
+{% load static %}
+{% load account %}
+<div id="modal_add_portfolio" class="mfp-hide b-modal-ctn b-modal-ctn_sm">
+    <button type="button" class="mfp-close"></button>
+    <div class="modal_title">
+        Добавить портфель
+        <div></div>
+    </div>
+    <div class="modal_content">
+        <form id="add_portfolio_form" action="{% url 'account-portfolio-add' %}"
+               onsubmit="return validate_add_portfolio()" method="get">
+            {% csrf_token %}
+            <div class="mo_line">
+
+                    <label style="padding-bottom: 10px;">Название портфеля</label>
+                    <input id="add_portfolio_name" type="text" name="add_portfolio_name" data-name="add_portfolio_name" autocomplete="off" required>
+
+            </div>
+
+            <p></p>
+
+            <div class="select_line change_portfolio" style="display: block; margin-bottom: 35px;">
+                <label style="padding-bottom: 10px;">Базовая валюта</label>
+                <div id="currency_selectBox" class="selectBox">
+
+                    <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+
+                    <p class=valueTag name=select>{{ currencies.0.ticker }}</p>
+
+                    <ul class="selectMenuBox">
+                        {% for currency in currencies %}
+                            <li class="option currency_option">{{ currency.ticker }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <input type="hidden" name="currency" value="RUB">
+                </div>
+            </div>
+
+            <p></p>
+
+            <div class="select_line change_portfolio" style="display: block; margin-bottom: 35px;">
+                <label style="padding-bottom: 10px;">Бенчмарк</label>
+                <div id="benchmark_selectBox" class="selectBox" style="text-transform: none;">
+
+                    <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+
+                    <p id="add_portfolio_benchmark_p" class=valueTag name=select>{{ benchmarks.0.name }}</p>
+
+                    <ul class="selectMenuBox">
+                        {% for benchmark in benchmarks %}
+                            <li class="option benchmarks_data" data-pk="{{ benchmark.id }}">{{ benchmark.name }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <input type="hidden" name="benchmark" data-pk="{{ benchmarks.0.id }}" value={{ benchmarks.0.name }}>
+                </div>
+            </div>
+            <p></p>
+
+            <div class="select_line change_portfolio" style="display: block; margin-bottom: 35px;">
+                <label style="padding-bottom: 10px;">Начальная дата</label>
+                <div class="selectBox">
+                    <input class="valueTag" id="add_portfolio_operation_date" type="text" name="date" placeholder="дд-мм-гггг" autocomplete="off"
+                    pattern="^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$">
+                </div>
+            </div>
+            <p></p>
+
+            <div class="select_line change_portfolio" style="display: block; margin-bottom: 35px;">
+                <label style="padding-bottom: 10px;">Начальная сумма</label>
+                <input id="add_portfolio_asset_cost" type="number" name="add_portfolio_asset_cost" min="0.0001" step="0.0001">
+            </div>
+            <p></p>
+            <div class="group-button">
+                <button style="border: none; outline: none" form="add_portfolio_form" class="blue_btn create_btn">
+                        <span>Добавить</span>
+                        <img src="{% static 'base/img/ok.png' %}" alt=""></button>
+            </div>
+
+        </form>
+        {% if add_portfolio_analysis_errors %}
+            <div class="sd_title_block analysis-errors" style="border-left: 1px solid #e60e0e; margin-top: 10px; margin-bottom: 0px;">
+                <p></p><p></p>
+                <span id="main-error" style="font-size: 12px; padding-bottom: 3px; text-transform: lowercase">ошибка при добавлении портфеля</span>
+            </div>
+        {% endif %}
+    </div>
+</div>

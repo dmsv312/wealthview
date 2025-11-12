@@ -1,0 +1,25 @@
+.total_label_form {
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+    margin-left: auto;
+    max-width: 150px!important;
+}
+
+.total_label {
+    margin-top: 35px;
+}
+
+.total_label input {
+    padding: 0!important;
+    border: 0!important;
+}
+
+@media (max-width: 767px) {
+    .total_label_form {
+        margin-left: 0;
+        margin-right: auto;
+        margin-top: 13px!important;
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+    }
+}

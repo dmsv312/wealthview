@@ -1,0 +1,35 @@
+/* category-select */
+.category-select {
+    display: none;
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    background-image: url("/staticfiles/base/img/arrow_bottom_dark.svg");
+    background-repeat: no-repeat;
+    background-size: 15px 10px;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0.02em;
+    color: #000000;
+    font-family: 'OpenSans-Regular';
+    padding: 11px 20px;
+    height: 100%;
+    border: none;
+    margin-bottom: 24px;
+}
+
+.category-select option {
+    font-family: Tahoma;
+    font-size: 16px!important;
+    line-height: 26px!important;
+}
+
+.category-select:focus {
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 767px) {
+    .category-select {
+        display: block;
+    }
+}

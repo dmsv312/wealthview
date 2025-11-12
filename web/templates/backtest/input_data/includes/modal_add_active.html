@@ -1,0 +1,27 @@
+{% load static %}
+<div id="modal_add_active" class="modal_add_active mfp-hide b-modal-ctn autocomplete_body">
+    <button type="button" class="mfp-close"></button>
+    <div class="modal_title">
+        выберите актив
+    </div>
+    <div class="modal_content">
+        <div>
+            <span>тип</span>
+            <div class="selectBox">
+
+                <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+
+                <p class=valueTag name=select>Тип актива</p>
+                <ul id="select_assets" class="selectMenuBox">
+                </ul>
+            </div>
+        </div>
+        <div class="input_search">
+            <span>имя</span>
+            <input type="text" class="tags" data-type="assets">
+        </div>
+        <div class="modal_submit">
+            <a id="modal_submit_button" href="#" class="blue_btn">Выбрать</a>
+        </div>
+    </div>
+</div>

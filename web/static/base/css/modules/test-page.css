@@ -1,0 +1,35 @@
+.progress-bar-ctn {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+}
+
+.progress-bar-ctn__wrap {
+    display: flex;
+    align-items: center;
+}
+
+
+@media (max-width: 1199px) {
+    .test_page_progress_bar {
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .test_page_progress_bar {
+        width: 100% !important;
+    }
+
+    .progress-bar-ctn {
+        width: 100%;
+    }
+
+    .progress-bar-ctn__wrap {
+        flex-direction: column;
+    }
+}

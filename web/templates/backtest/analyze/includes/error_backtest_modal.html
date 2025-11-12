@@ -1,0 +1,12 @@
+{% load static %}
+<div id="error_backtest_modal" style="text-align: center;" class="mfp-hide b-modal-ctn b-modal-ctn_sm">
+    <button type="button" class="mfp-close"></button>
+    <div id="error_backtest_title" class="modal_title">
+        Ошибка анализа портфеля
+        <div></div>
+    </div>
+    <div class="modal_content">
+        <p id="error_backtest_p" style="font-size: 13px;">{{ error_text }}</p>
+        <a style="cursor:pointer;" class="blue_btn error_backtest">Понятно</a>
+    </div>
+</div>

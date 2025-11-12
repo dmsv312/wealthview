@@ -1,0 +1,42 @@
+.start_page_account {
+    display: flex;
+    align-items: center;
+}
+
+.start_page_account img {
+    max-width: 400px;
+}
+
+@media (max-width: 1199px) {
+    #start_page > div {
+        width: 49% !important;
+    }
+
+    #start_page > div > img {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    #start_page {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    #start_page > div {
+        width: 100% !important;
+        padding: 0!important;
+        margin: 0!important;
+    }
+
+    #start_page > div > img {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    #end_div {
+        display: block!important;
+    }
+}

@@ -1,0 +1,124 @@
+{% load static %}
+{% load account %}
+<div id="modal_made_operation" class="b-modal-ctn b-modal-made-operation mfp-hide">
+    <button type="button" class="mfp-close"></button>
+    <div class="modal_title">
+        Добавить транзакцию
+        <div></div>
+    </div>
+    <div class="modal_content">
+        <form class="lu" id="add_operation" action="{% url 'account-operations' portfolio.id %}"
+              onsubmit="return validate_add_operation()" method="post">
+            {% csrf_token %}
+            <div class="mo_line">
+                <div>
+                    <label>Дата операции</label>
+                    <div class="selectBox">
+                        <input class="valueTag" id="operation_date" type="text" name="date" placeholder="дд-мм-гггг" autocomplete="off" required
+                        pattern="^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$">
+                    </div>
+                </div>
+                <div>
+                    <label>Класс актива</label>
+                    <div class="selectBox">
+
+                        <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width="15px" class="arrow">
+
+                        <p id="asset_type" class="valueTag" data-name="asset_class">акция</p>
+
+                        <ul class="selectMenuBox" data-name="asset_class">
+                            <li class="option" data-value="asset">акция</li>
+                            <li class="option" data-value="ETF">ETF</li>
+                            <li class="option" data-value="cash">денежные средства</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <label>Тип операции</label>
+                    <div class="selectBox">
+
+                        <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width="15px" class="arrow">
+
+                        {% with operation_types|filter_operation_types:"asset" as operation_types %}
+                            <p id="operation_type" class="valueTag" data-name="operation_type"
+                               data-value="{{ operation_types.first.slug }}">{{ operation_types.first.name }}</p>
+                        {% endwith %}
+
+                        <ul class="selectMenuBox" data-name="operation_type">
+                            {% if operation_types %}
+                                {% for type in operation_types|filter_operation_types:"asset" %}
+                                    <li class="option" data-type="asset"
+                                        data-value="{{ type.slug }}">{{ type.name }}</li>
+                                {% endfor %}
+                                {% for type in operation_types|filter_operation_types:"cash" %}
+                                    <li style="display: none" class="option" data-type="cash"
+                                        data-value="{{ type.slug }}">{{ type.name }}</li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mo_line">
+                <div class="autocomplete_body">
+                    <label>Название актива</label>
+                    <input id="asset_name" type="text" class="tags" name="asset" data-type="assets" data-filter="ST" required/>
+                </div>
+            </div>
+            <div class="mo_line">
+                <div>
+                    <label>Количество</label>
+                    <input id="asset_count" type="number" name="count" required min="0.01" step="0.01" autocomplete="off">
+                </div>
+                <div>
+                    <label>Цена</label>
+                    <input id="asset_price" type="number" name="price" required min="0.0001" step="0.0001">
+                </div>
+                <div>
+                    <label>Стоимость
+                        <div class="info_common_block">
+                            <span class="js-tooltip" data-tooltip-content="#tooltip_cost">
+                                 <img src="/staticfiles/base/img/info.svg" alt="">
+                            </span>
+                        </div>
+                    </label>
+                    <input id="asset_cost" class="disabled-input" type="number" name="cost" disabled required min="0.0001" step="0.0001">
+                </div>
+            </div>
+            <div class="remember_lost_line group-button">
+                <div>
+                    <button style="border: none; outline: none" form="add_operation" class="blue_btn create_btn"
+                            id="add_transaction">
+                        <span>Добавить</span>
+                        <img src="{% static 'base/img/ok.png' %}" alt=""></button>
+                </div>
+            </div>
+
+        </form>
+        {% if analysis_errors %}
+            <div class="sd_title_block analysis-errors" style="border-left: 1px solid #e60e0e; margin-top: 10px">
+                <p></p><p></p>
+                <span id="main-error" style="font-size: 12px; padding-bottom: 3px; text-transform: lowercase">ошибка при добавлении операции</span>
+                <span id="text-error" style="font-size: 16px">{{ error_text }}</span>
+
+                <input id="error_date" type="text" style="display: none" value="{{ operation_date }}"/>
+                <input id="error_operation_type" type="text" style="display: none" value="{{ type }}"/>
+
+                <input id="error_asset_type" type="text" style="display: none" value="{{ asset_type.title }}"/>
+                <input id="error_asset_pk" type="text" style="display: none" value="{{ asset_pk }}"/>
+                <input id="error_asset_name" type="text" style="display: none" value="{{ asset.as_suggestion }}"/>
+
+                <input id="error_asset_count" type="number" style="display: none" value="{{ count }}"/>
+                <input id="error_asset_price" type="number" style="display: none" value="{{ price }}"/>
+                <input id="error_asset_cost" type="number" style="display: none" value="{{ cost }}"/>
+                {% if analysis_errors.exception and user.is_staff %}
+                    <div>
+                        <span style=" font-size: 12px; text-transform: lowercase"> {{ analysis_errors.exception }}</span>
+                    </div>
+
+                {% endif %}
+
+            </div>
+        {% endif %}
+    </div>
+</div>

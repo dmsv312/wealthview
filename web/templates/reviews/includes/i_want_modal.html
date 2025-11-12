@@ -1,0 +1,37 @@
+{% load static %}
+<div id="i_want_modal" class="modal_block bg_light">
+    <form id="review_form" action="{% url 'send-review' %}" method="post">
+        {% csrf_token %}
+        <div class="modal_title">МНЕ ХОТЕЛОСЬ БЫ...</div>
+        <div class="modal_content">
+            <div class="i_want_line">
+                <a href="#" id="ID" class="type_select iw_line_href active">
+                    <div>Предложить идею</div>
+                    <div class="type_icon"><img src="{% static 'base/img/iwm_1.png' %}" alt=""></div>
+                </a>
+                <a href="#" id="TH" class="type_select iw_line_href">
+                    <div>Поблагодарить</div>
+                    <div class="type_icon"><img src="{% static 'base/img/iwm_2.png' %}" alt=""></div>
+                </a>
+                <a href="#" id="PR" class="type_select iw_line_href">
+                    <div>Сообщить о проблеме</div>
+                    <div class="type_icon"><img src="{% static 'base/img/iwm_3.png' %}" alt=""></div>
+                </a>
+                <a href="#" id="QU" class="type_select iw_line_href">
+                    <div>Задать вопрос</div>
+                    <div class="type_icon"><img src="{% static 'base/img/iwm_4.png' %}" alt=""></div>
+                </a>
+            </div>
+            <div>
+                <input id="id_type" type="hidden" name="type" value="ID">
+                <p class="text-muted"><i>Ваш отзыв появится после модерации</i></p>
+                {{ review_form.title }}
+                {{ review_form.content }}
+            </div>
+            <div class="modal_submit">
+                <input class="blue_btn submit_input" type="submit" value="ОТПРАВИТЬ">
+            </div>
+        </div>
+    </form>
+    <img src="{% static 'base/img/close_light.png' %}" alt="" class="modal_close close_btn">
+</div>

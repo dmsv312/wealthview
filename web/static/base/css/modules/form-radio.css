@@ -1,0 +1,62 @@
+.form_radio {
+    margin-bottom: 20px;
+    border: 1px solid #495DF3;
+    border-radius: 25px;
+    background: #343B59;
+}
+
+.form_radio input[type=radio] {
+    display: none;
+}
+.form_radio label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    line-height: 20px;
+    user-select: none;
+
+    padding: 15px;
+    padding-left: 50px;
+    width: 100%;
+
+}
+.form_radio label:before {
+    content: "";
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    background-image: url("/staticfiles/base/img/Rectangle2.svg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Checked */
+.form_radio input[type=radio]:checked + label:before {
+    background-image: url("/staticfiles/base/img/Rectangle4.svg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Hover */
+.form_radio label:hover:before {
+    filter: brightness(120%);
+}
+
+/* Disabled */
+.form_radio input[type=radio]:disabled + label:before {
+    filter: grayscale(100%);
+}
+
+@media (max-width: 767px) {
+    .form_radio label {
+        font-size: 13px!important;
+        line-height: 18px;
+        width: 100%;
+    }
+}

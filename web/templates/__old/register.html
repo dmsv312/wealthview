@@ -1,0 +1,26 @@
+{% comment %}
+{% extends "wrapper.html" %}
+
+{% block login %}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Регистрация</h5>
+            </div>
+            <form action="/auth/register/" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+{#                    <input type="text" name="login" class="form-control search-pole" placeholder="Логин" style="height: 40px; margin: 3%; width: 94%">#}
+                    {{ form }}
+                    {#                        <input type="password" name="password" class="form-control search-pole" placeholder="Пароль" style="height: 40px; margin: 3%; width: 94%">#}
+                    {#                        {% if login_error %}#}
+                    {#                            <label class="text-danger">{{ login_error }}</label>#}
+                    {#                        {% endif %}#}
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-outline-primary" value="Зарегистрироваться">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}{% endcomment %}

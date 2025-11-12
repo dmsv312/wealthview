@@ -1,0 +1,229 @@
+{% load static %}
+{% load backtest %}
+<div class="table_block">
+    <table>
+        <tr>
+            <td colspan="3" class="tac ossb ttu bn">Показатели доходности</td>
+        </tr>
+        <tr>
+            <td class="dfaicjcsb">
+                Коэффициент Шарпа
+                <div class="info_common_block">
+                    <img src="{% static 'base/img/info.svg' %}" alt="" class="info">
+                    <div class="info_block">
+                        <div class="info_block_title">
+                            Коэффициент Шарпа
+                            <img src="{% static 'base/img/close.svg' %}" alt=""
+                                 class="close_info">
+                        </div>
+                        <div class="info_block_text">
+                            <p>Коэф. Шарпа (S) показывает, какую избыточную доходность
+                                (превышающую безрисковую ставку) мы получаем на единицу
+                                риска.</p>
+                            <p>Если:<br/>
+                                S > 0 - доходность больше безрисковой ставки; <br/>
+                                S < 0 - избыточная доходность отрицательная; <br/>
+                                S1 > S2 - первый портфель привлекательнее второго.
+                            </p>
+                            <p>Чем больше коэф. Шарпа, тем лучше</p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="tac">
+                {{ portfolio_analysis_data.stats_param.sharp.value| smart_round }}{{ portfolio_analysis_data.stats_param.sharp.unit }}
+            </td>
+            <td>
+                <hr class="gb_line sharp gb pg">
+            </td>
+        </tr>
+        <tr>
+            <td class="dfaicjcsb">
+                Коэффициент альфа
+                <div class="info_common_block">
+                    <img src="{% static 'base/img/info.svg' %}" alt="" class="info">
+                    <div class="info_block">
+                        <div class="info_block_title">
+                            Коэффициент альфа
+                            <img src="{% static 'base/img/close.svg' %}" alt=""
+                                 class="close_info">
+                        </div>
+                        <div class="info_block_text">
+                            <p>Коэф. альфа (α) - величина, на которую доходность портфеля превышает рыночную после
+                                поправки на риск..</p>
+                            <p>Данный показатель характеризует наличие у управляющего преимущества над рынком,
+                                под который понимается фондовый индекс, выступающий в качестве бенчмарка. Если:<br/>
+                                α > 0 - портфель лучше рынка; <br/>
+                                α < 0 - портфель хуже рынка. А это значит, что выбор в пользу пассивного и/или
+                                индексного инвестирования будет более эффективным решением.<br/>
+                                S1 > S2 - первый портфель привлекательнее второго.
+                            </p>
+                            <p>Чем больше коэф. альфа, тем лучше</p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="tac">
+                {{ portfolio_analysis_data.stats_param.alpha.value| smart_round }}{{ portfolio_analysis_data.stats_param.alpha.unit }}
+            </td>
+            <td>
+                <hr class="gb_line alpha gb pg">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="tac ossb ttu bn">Показатели риска</td>
+        </tr>
+        <tr>
+            <td class="dfaicjcsb">
+                Коэффициент бета
+                <div class="info_common_block">
+                    <img src="{% static 'base/img/info.svg' %}" alt="" class="info">
+                    <div class="info_block">
+                        <div class="info_block_title">
+                            Коэффициент бета
+                            <img src="{% static 'base/img/close.svg' %}" alt=""
+                                 class="close_info">
+                        </div>
+                        <div class="info_block_text">
+                            <p>Коэф. бета (β) определяет меру риска портфеля по отношению к рынку и показывает
+                                чувствительность изменения доходности портфеля по отношению к изменению доходности
+                                рынка.
+                                Если:<br/>
+                                β > 1 - портфель агрессивный: во время роста рынка портфель растет быстрее,
+                                также как и при падении - показывает более сильное движение вниз. <br/>
+                                β < 1 - портфель защитный: растет медленнее рынка, но и при его падении, показывает
+                                меньшие потери<br/>
+                            </p>
+                            <p>Коэф. бета (β) = 1,5 означает, что при росте рынка на +10%, портфель в среднем вырастет
+                                на 15%, а при падении на -10%, упадет на -15%.</p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="tac">
+                {{ portfolio_analysis_data.stats_param.beta.value| smart_round }}{{ portfolio_analysis_data.stats_param.beta.unit }}
+            </td>
+            <td>
+                <hr class="gb_line beta gb_reverse pg">
+            </td>
+        </tr>
+        <tr>
+            <td class="dfaicjcsb">
+                Волатильность портфеля
+                <div class="info_common_block">
+                    <img src="{% static 'base/img/info.svg' %}" alt="" class="info">
+                    <div class="info_block">
+                        <div class="info_block_title">
+                            Волатильность портфеля
+                            <img src="{% static 'base/img/close.svg' %}" alt=""
+                                 class="close_info">
+                        </div>
+                        <div class="info_block_text">
+                            <p>Волатильность = риск = стандартное отклонение (СКО). Показывает амплитуду колебаний
+                                портфеля. Одна из самых распространенных мер риска в современной портфельной теории.</p>
+                            <p>СКО = 20% означает, что в среднем доходность портфеля отклоняется от своего среднего
+                                значения на 20%. Чем показатель выше, тем портфель рискованнее</p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="tac">
+                {{ portfolio_analysis_data.stats_param.vol_ptf.value| smart_round }}{{ portfolio_analysis_data.stats_param.vol_ptf.unit }}
+            </td>
+            <td>
+                <hr class="gb_line vol_ptf  pg">
+            </td>
+
+        </tr>
+        <tr>
+            <td class="dfaicjcsb">
+                Волатильность бенчмарка
+                <div class="info_common_block">
+                    <img src="{% static 'base/img/info.svg' %}" alt="" class="info">
+                    <div class="info_block">
+                        <div class="info_block_title">
+                            Волатильность бенчмарка
+                            <img src="{% static 'base/img/close.svg' %}" alt=""
+                                 class="close_info">
+                        </div>
+                        <div class="info_block_text">
+                            <p>Волатильность = риск = стандартное отклонение (СКО). Показывает амплитуду колебаний
+                                портфеля. Одна из самых распространенных мер риска в современной портфельной теории.</p>
+                            <p>СКО = 20% означает, что в среднем доходность портфеля отклоняется от своего среднего
+                                значения на 20%. Чем показатель выше, тем портфель рискованнее</p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="tac">
+                {{ portfolio_analysis_data.stats_param.vol_bench.value| smart_round }}{{ portfolio_analysis_data.stats_param.vol_bench.unit }}
+            </td>
+            <td>
+                <hr class="gb_line vol_bench pg">
+            </td>
+        </tr>
+        <tr>
+            <td class="dfaicjcsb">
+                VaR
+                <div class="info_common_block">
+                    <img src="{% static 'base/img/info.svg' %}" alt="" class="info">
+                    <div class="info_block">
+                        <div class="info_block_title">
+                            VaR
+                            <img src="{% static 'base/img/close.svg' %}" alt=""
+                                 class="close_info">
+                        </div>
+                        <div class="info_block_text">
+                            <p>VaR (Value at Risk) показывает возможный убыток в процентах, который может понести
+                                инвестор. VaR можно интерпретировать следующим образом: в будущем периоде с
+                                вероятностью 95% убыток от инвестирования не превысит VaR процентов.</p>
+                            <p></p>
+
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="tac">
+                {{ portfolio_analysis_data.stats_param.var.value| smart_round }}{{ portfolio_analysis_data.stats_param.var.unit }}
+            </td>
+            <td>
+                <hr class="gb_line var pg">
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="tac ossb ttu bn">показатели взаимосвязи</td>
+        </tr>
+        <tr>
+            <td class="dfaicjcsb">
+                Коэффициент детерминации (R-квадрат)
+                <div class="info_common_block">
+                    <img src="{% static 'base/img/info.svg' %}" alt="" class="info">
+                    <div class="info_block">
+                        <div class="info_block_title">
+                            Коэффициент детерминации (R-квадрат)
+                            <img src="{% static 'base/img/close.svg' %}" alt=""
+                                 class="close_info">
+                        </div>
+                        <div class="info_block_text">
+                            <p>Описывает тесноту взаимосвязи между бенчмарком и портфелем.
+
+                                Показывает, насколько выбранный бенчмарк соответсвует Вашему портфелю. Если Вы
+                                инвестируете в российские акции,
+                                но в качестве бенчмарка выбрали индекс S&P500 (индекс американских акций),
+                                то R-квадрат будет низким. Чем показатель выше, тем лучше бенчмарк описывает портфель
+                                и может быть пригоден для анализа портфеля.</p>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="tac">
+                {{ portfolio_analysis_data.stats_param.r_square.value| smart_round }}{{ portfolio_analysis_data.stats_param.r_square.unit }}
+            </td>
+            <td>
+                <hr class="gb_line r_square gb pg">
+            </td>
+        </tr>
+    </table>
+</div>

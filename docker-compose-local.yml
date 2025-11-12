@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  bot:
+    restart: always
+    image: wealthview-web
+    command: python WealthView/bot.py
+    depends_on:
+      - web
+  web:
+    restart: always
+    build: web
+    image: wealthview-web
+    container_name: web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./supervisor:/etc/supervisor/conf.d
+      - ./web:/code
+      - media:/code/media/media
+    privileged: true
+    ports:
+      - "8000:8000"
+    environment:
+      ENVIRONMENT: LOCAL
+      DATABASE_NAME: wealthview
+      DATABASE_USER_NAME: postgres
+      DATABASE_PASSWORD:
+      DATABASE_HOST: 127.0.0.1
+      DATABASE_PORT: 5432
+    depends_on:
+        - redis
+    links:
+        - redis:redis
+  redis:
+    restart: always
+    image: redis:2.8
+    container_name: redis
+    ports:
+      - '6385:6379'
+    sysctls:
+      net.core.somaxconn: '65535'
+
+volumes:
+  media:

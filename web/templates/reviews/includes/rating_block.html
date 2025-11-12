@@ -1,0 +1,35 @@
+{% load static %}
+
+{# LIKE_BLOCK #}
+{% if user.is_authenticated %}
+    {% if is_my %}
+        <a href="#" class="user_review">
+    {% else %}
+        <a href="#" class="rateable" data-url="{% url 'like-review' pk=review.pk %}">
+    {% endif %}
+{% else %}
+    <a href="#" class="login_btn">
+{% endif %}
+<div class="like_btn {% if is_liked %} m_green {% endif %}">
+    <!---<img src="{% static 'base/img/nice_idea.png' %}" alt="">--->
+    <i class="far fa-thumbs-up"></i>
+    <span class="col_idea">{{ review.likes.count }}</span>
+</div>
+</a>
+
+{# DISLIKE_BLOCK #}
+{% if user.is_authenticated %}
+    {% if is_my %}
+        <a href="#" class="user_review">
+    {% else %}
+        <a href="#" class="rateable" data-url="{% url 'dislike-review' pk=review.id %}">
+    {% endif %}
+{% else %}
+    <a href="#" class="login_btn">
+{% endif %}
+<div class="dislike_btn {% if is_disliked %} m_red {% endif %}">
+    <!---<img src="{% static 'base/img/bad_idea.png' %}" alt=""> --->
+    <i class="far fa-thumbs-down"></i>
+    <span class="col_idea">{{ review.dislikes.count }}</span>
+</div>
+</a>

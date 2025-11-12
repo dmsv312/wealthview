@@ -1,0 +1,15 @@
+{% comment %}
+{% extends "wrapper.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Hello, {{ user.username }}</h1>
+        <p>Вы успешно авторизованы!</p>
+{#        <a href="/logout" class="btn btn-light btn-lg">Выйти</a>#}
+    {% else %}
+        <h1>Main Page</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aspernatur aut commodi dignissimos, dolorem facere
+            fugiat id inventore iste laborum magni molestias necessitatibus optio quas rerum tenetur ut. Illo,
+            voluptatum?</p>
+    {% endif %}
+{% endblock %}{% endcomment %}

@@ -1,0 +1,18 @@
+{% load static %}
+{% load backtest %}
+{% block extra_import %}
+    <link rel="stylesheet" href="{% static 'base/css/alert.css' %}">
+    <link rel="stylesheet" href="{% static "backtest/highcharts.css" %}">
+
+{% endblock %}
+{% block extra_style %}
+    {% if portfolio_analysis_data.stats_param %}
+        {% include 'common/analyze/includes/stats_params_styles.html' %}
+    {% endif %}
+{% endblock %}
+
+{% if portfolio_analysis_data %}
+    {% include 'account/analyze/base_info.html' %}
+{% else %}
+    <h2 style="text-align: center">{{ errors }}</h2>
+{% endif %}

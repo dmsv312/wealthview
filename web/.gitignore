@@ -1,0 +1,13 @@
+*.pyc
+*.pyo
+.idea
+staticfiles/
+
+# Virtual env
+venv/
+.venv
+*.log
+*.pid
+
+# default main json log file
+main.json.log

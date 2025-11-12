@@ -1,0 +1,26 @@
+.radio {
+    margin-right: 12px;
+    margin-bottom: 0;
+    position: relative;
+}
+
+.radio input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    top: 0;
+    left: 0;
+}
+
+.radio__text {
+    position: relative;
+    cursor: pointer;
+    padding: 8px 8px;
+    background: #1d2130;
+    color: #888a8d;
+    line-height: 1;
+}
+
+.radio input:checked + .radio__text {
+    color: #fff;
+}

@@ -1,0 +1,39 @@
+{% extends "main/main.html" %}
+
+{% block additional %}
+{% include "auth_sys/includes/mobile_menu.html" %}
+    <div id="overlay" class="simple_page"></div>
+    {% include "auth_sys/includes/mobile_menu.html" %}
+    {% include "auth_sys/includes/auth_modal.html" %}
+    <script>
+        {% if process == 'login' %}
+            $.magnificPopup.open({
+                mainClass: 'b-modal',
+                items: {
+                    src: '#login_block'
+                },
+                type: 'inline'
+            }, 0);
+        {% endif %}
+        {% if process == 'activate' or process == 'change_settings_success' or process == 'forget_password' %}
+            $.magnificPopup.open({
+                mainClass: 'b-modal',
+                items: {
+                    src: '#activate_block'
+                },
+                type: 'inline'
+            }, 0);
+        {% endif %}
+        {% if process == 'change_settings' %}
+            $.magnificPopup.open({
+                mainClass: 'b-modal',
+                items: {
+                    src: '#change_settings_block'
+                },
+                type: 'inline'
+            }, 0);
+        {% endif %}
+    </script>
+{% endblock %}
+
+

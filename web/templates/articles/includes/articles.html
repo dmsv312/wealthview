@@ -1,0 +1,18 @@
+{% load static %}
+
+{% for article in articles_data %}
+    <div class="article">
+        <div class="thumbnail">
+            <img src="{{ article.thumbnail.url }}" alt="">
+            <span>{{ article.date|date:"d E Y" }}</span>
+        </div>
+        <div class="article_content">
+            <span>«{{ article.title }}»</span>
+            <img src="{% static 'base/img/art_img_hr.svg' %}" alt="">
+            <div class="article_text">
+                {{ article.description }}
+            </div>
+        </div>
+        <a href="{% url 'article-page' article.category.slug article.slug %}" class="blue_btn">Читать статью</a>
+    </div>
+{% endfor %}

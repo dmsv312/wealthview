@@ -1,0 +1,63 @@
+{% load backtest %}
+{% load account %}
+<div class="absolute_figures table_block table_param">
+    <table>
+        <tr>
+            <td colspan="7" class="tac ossb bg_td_dark ttu">Изменение за период</td>
+        </tr>
+        <tr>
+            <td class="tac ossb bg_td_dark"></td>
+            <td class="tac ossb bg_td_dark">1m</td>
+            <td class="tac ossb bg_td_dark">3m</td>
+            <td class="tac ossb bg_td_dark">6m</td>
+            <td class="tac ossb bg_td_dark">YTD</td>
+            <td class="tac ossb bg_td_dark">1y</td>
+            <td class="tac ossb bg_td_dark">All</td>
+        </tr>
+        <tr>
+            <td class="w150">Портфель</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.ptf.one_month| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.ptf.three_month| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.ptf.six_month |smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.ptf.ytd| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.ptf.one_year| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.ptf.all| smart_round | show_ticker:"%" }}</td>
+        </tr>
+        <tr>
+            <td>{{ portfolio_analysis_data.benchmark_name }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.bench.one_month| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.bench.three_month| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.bench.six_month |smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.bench.ytd| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.bench.one_year| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.bench.all| smart_round | show_ticker:"%" }}</td>
+        </tr>
+        <tr>
+            <td>{{ portfolio_analysis_data.no_risk_rate.name }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.nr.one_month| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.nr.three_month| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.nr.six_month |smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.nr.ytd| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.nr.one_year| smart_round | show_ticker:"%" }}</td>
+            <td class="tac">
+                {{ portfolio_analysis_data.abs_profit_by_periods.nr.all| smart_round | show_ticker:"%" }}</td>
+        </tr>
+    </table>
+</div>

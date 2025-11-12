@@ -1,0 +1,27 @@
+.graph_price {
+    width: 100%;
+}
+
+.graph_price1 .highcharts-container, .graph_price2 .highcharts-container {
+    width: 100% !important;
+}
+
+@media (max-width: 767px) {
+    .graph_price {
+        padding: 0;
+        box-shadow: none;
+    }
+
+    .graph_price .table_block {
+        overflow: auto;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: auto;
+    }
+
+    .graph_price .table_block table {
+        min-width: 400px;
+    }
+}

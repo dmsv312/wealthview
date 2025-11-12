@@ -1,0 +1,23 @@
+{% extends "admin/change_list.html" %}
+{% block object-tools-items %}
+
+    {{ block.super }}
+
+	<li>
+        <a href="update_portfolios/" class="grp-state-focus addlink">Обновить портфели</a>
+    </li>
+	<li>
+        <a href="reparse_assets/" class="grp-state-focus addlink">Спарсить активы</a>
+    </li>
+    	<li>
+        <a href="reparse_all_attribs/" class="grp-state-focus addlink">Обновить атрибуты</a>
+    </li>
+{#	<li>#}
+{#        <a href="recalc_assets_prices/" class="grp-state-focus addlink">Пересчитать все цены</a>#}
+{#    </li>#}
+{#    <li>#}
+{#        <a href="update_assets_prices/" class="grp-state-focus addlink">Спарсить новые данные</a>#}
+{#    </li>#}
+
+
+{% endblock %}

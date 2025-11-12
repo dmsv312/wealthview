@@ -1,0 +1,115 @@
+{% load backtest %}
+{% load static %}
+{% if open_positions %}
+    <div class="table_line">
+        <div class="tar ossb">{{ asset_type }}</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    {% for open_position in open_positions %}
+        <div class="table_line bg_dark table_asset">
+            <div class="toogle_link dfaic">
+                {% if asset_type != "Денежные средства" %}
+                    <img src="{% static 'base/img/arrow_1.svg' %}" alt="" class="rotate90"> {% endif %}
+                {{ open_position.asset.name }}
+            </div>
+            <div>{{ open_position.asset.exchange_ticker }}</div>
+            <div>{{ open_position.current_price|floatformat:2 }}</div>
+            <div>{% if open_position.average_price %}{{ open_position.average_price|floatformat:2 }}{% endif %}</div>
+            <div>{% if open_position.quantity_open %}{{ open_position.quantity_open|floatformat:1 }}{% endif %}</div>
+            <div>{% if open_position.ptf_percent %}{{ open_position.ptf_percent|smart_round }}{% endif %}</div>
+            <div>{% if open_position.invest_sum %}{{ open_position.invest_sum|smart_round }}{% endif %}</div>
+            <div>{% if open_position.current_cost %}{{ open_position.current_cost|floatformat:2 }}{% endif %}</div>
+            <div>{% if open_position.percent_change %}{{ open_position.percent_change|smart_round }}{% endif %}</div>
+            {% if asset_type != "Денежные средства" %}
+            {% if asset_type == "ETF" %}
+                {% with asset=open_position.asset %}
+                    <div class="sub_toggle in_shad">
+                        <div>
+                            <div>
+                                <div>
+                                    <span class="ossb ttu">рынок: </span>{{ asset.country }}
+                                </div>
+                                <div>
+                                    <span class="ossb ttu">биржа: </span>{{ asset.exchange }}
+                                </div>
+                                <div>
+                                    <span class="ossb ttu">валюта торгов: </span>{{ asset.currency_code }}
+                                </div>
+                                <div>
+                                    <span class="ossb ttu">isin: </span>{{ asset.isin }}
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <span class="ossb ttu">Полное название: </span>{{ asset.name }}
+                                </div>
+                                <div>
+                                    <span class="ossb ttu">Эмитент: </span>{{ asset.company_name }}
+                                </div>
+                                <div>
+                                    <span class="ossb ttu">Объект инвестирования: </span>{{ asset.category }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+            {% else %}
+                {% with asset=open_position.asset %}
+                <div class="sub_toggle in_shad">
+                    <div>
+                        <div>
+                            <div>
+                                <span class="ossb ttu">рынок: </span>{{ asset.country }}
+                            </div>
+                            <div>
+                                <span class="ossb ttu">биржа: </span>{{ asset.exchange }}
+                            </div>
+                            <div>
+                                <span class="ossb ttu">валюта торгов: </span>{{ asset.currency_code }}
+                            </div>
+                            <div>
+                                <span class="ossb ttu">isin: </span>{{ asset.isin }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="ossb ttu">дивидендная доходность: </span>{% if asset.dividend_yield != "" %}
+                                {{ asset.dividend_yield }}%{% endif %}
+                            </div>
+                            <div>
+                                <span class="ossb ttu">Размер дивиденда: </span>{{ asset.dividend_share }}
+                            </div>
+                            <div>
+                                <span class="ossb ttu">дата див. отсечки: </span>{{ asset.ex_dividend_date }}
+                            </div>
+                            <div>
+                                <span class="ossb ttu">дата отчетности: </span>{{ asset.report_date }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="ossb ttu">рыночная капитализация: </span>{{ asset.market_capitalization }}
+                            </div>
+                            <div>
+                                <span class="ossb ttu">сектор: </span>{{ asset.sector }}
+                            </div>
+                            <div>
+                                <span class="ossb ttu">отрасль: </span>{{ asset.industry }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endwith %} 
+            {% endif %}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endif %}

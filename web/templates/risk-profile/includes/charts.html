@@ -1,0 +1,492 @@
+<script type="text/javascript">
+
+    // recalculate values to be relative to the first period value
+    function get_profit(day_price, first_price) {
+        return ((day_price / first_price - 1) * 100)
+    }
+
+    // zip dates and values into array of arrays
+    function get_relative_values(data_array, start_index, end_index) {
+        let dates = data_array["dates"].slice(start_index, end_index + 1);
+        let values = data_array["values"].slice(start_index, end_index + 1);
+        let profit = values.map(function (x) {
+            return get_profit(x, values[0])
+        });
+        return dates.map(function (e, i) {
+            return [e, profit[i]];
+        });
+
+    }
+
+    var analysis_data = {{ portfolio_analysis_data | safe }};
+    var ptf_price_change = analysis_data["ptf_price_change"];
+    var bench_price_change = analysis_data["bench_price_change"];
+    var nr_price_change = analysis_data["nr_price_change"];
+    var all_data_array = [ptf_price_change, bench_price_change, nr_price_change];
+
+    // default start and end indexes
+    var start_index = 0;
+
+    // get data for default period
+    ptf_price_change["data"] = get_relative_values(ptf_price_change, start_index, ptf_price_change["dates"].length);
+    bench_price_change["data"] = get_relative_values(bench_price_change, start_index, bench_price_change["dates"].length);
+    nr_price_change["data"] = get_relative_values(nr_price_change, start_index, nr_price_change["dates"].length);
+    var no_risk_rate = analysis_data["no_risk_rate"];
+
+    var benchmark_name = analysis_data["benchmark_name"];
+    var colors = ['#43CDCB', '#495DF3', '#754695'];
+    let day_milliseconds = 24 * 60 * 60 * 1000;
+
+    // Recalculate data after date range changing.
+    function afterSetExtremes(e) {
+        let chart = Highcharts.charts[0];
+        // recalculate after button click or changing date in the box. Difference length should be one day or more
+        if ((e.trigger === 'rangeSelectorInput' || e.trigger === "rangeSelectorButton" || e.trigger === "navigator")) {
+
+            // set time to 00:00:00
+            let selected_date_min = new Date(e.min).setUTCHours(0, 0, 0, 0);
+            let selected_date_max = new Date(e.max).setUTCHours(0, 0, 0, 0);
+            let date_min_not_corrected = e.min;
+
+            let date_exists = true;
+
+            // find start and end date index of new selected period
+            function get_date_indexes(array) {
+                let end_date_exists = false;
+                let start_date_exists = false;
+                let start_date_index = 0;
+                let end_date_index = 0;
+                let dates = array["dates"];
+                let date_min = selected_date_min;
+                let date_max = selected_date_max;
+                while ((!start_date_exists || !end_date_exists) || !date_exists) {
+                    start_date_index = dates.indexOf(date_min);
+                    end_date_index = dates.indexOf(date_max);
+
+                    // increase start date while date will not be found
+                    if (start_date_index !== -1) {
+                        start_date_exists = true;
+                    } else {
+                        date_min += 24 * 60 * 60 * 1000;
+                    }
+                    // decrease end date while date will not be found
+                    if (end_date_index !== -1) {
+                        end_date_exists = true;
+                    } else {
+                        date_max -= 24 * 60 * 60 * 1000;
+                    }
+                    // if start date and end date where not found break cycle and return empty array
+                    if (date_min > dates[dates.length - 1] || date_max < dates[1]) {
+                        date_exists = false;
+                    }
+                }
+                if (date_exists) {
+                    return [start_date_index, end_date_index]
+                } else {
+                    return []
+                }
+            }
+
+            // update series with the new relative values for new selected period
+            function update_series_values(array, new_date_indexes, series_index) {
+                if (new_date_indexes) {
+                    let start_date_index = new_date_indexes[0];
+                    let end_date_index = new_date_indexes[1];
+                    let new_values = get_relative_values(array, start_date_index, end_date_index); // calculate new relative values
+                    let start_date = new_values[0][0];
+                    // change min date to date which was selected by user if it was selected by navigator dragging (date selected by navigator dragging very likely will be not with 00:00:00 time params )
+                    if (Math.abs(date_min_not_corrected - start_date) < 86400000) {
+                        new_values[0][0] = date_min_not_corrected;
+                    }
+                    chart.series[series_index].setData(new_values, false, false, false);
+                } else {
+                    return array["data"]
+                }
+            }
+
+            // ajax request for updating ptf series
+            function update_ptf_values(ptf_date_indexes) {
+
+                if (ptf_date_indexes) {
+                    let start_index = ptf_date_indexes[0];
+                    let end_index = ptf_date_indexes[1];
+                    let location = window.location.origin;
+                    let url = new URL(location + '/backtest/ajax/analyze_portfolio/relative_values/');
+                    let params = {
+                        start_date: ptf_price_change["dates"][start_index],
+                        end_date: ptf_price_change["dates"][end_index]
+                    };
+                    url.search = new URLSearchParams(params).toString();
+
+                    jQuery.ajax({
+                        url: url,
+                        success: function (result) {
+                            if (result["result"] === true) {
+                                // change min date to date which was selected by user if it was selected by navigator dragging (date selected by navigator dragging very likely will be not with 00:00:00 time params )
+                                if (Math.abs(result["values"][0][0] - date_min_not_corrected) < 86400000) {
+                                    result["values"][0][0] = date_min_not_corrected;
+                                }
+                                chart.series[0].setData(result["values"], false, false, false); // update series
+
+                            } else {
+                                console.log("check date periods for portfolio");
+                            }
+                        },
+                        async: false
+                    });
+                }
+            }
+
+            let bench_date_indexes = get_date_indexes(bench_price_change);
+            let nr_date_indexes = get_date_indexes(nr_price_change);
+            let ptf_date_indexes = get_date_indexes(ptf_price_change);
+            update_series_values(bench_price_change, bench_date_indexes, 1); // update bench
+            update_series_values(nr_price_change, nr_date_indexes, 2); // update nr
+            update_ptf_values(ptf_date_indexes);
+            chart.redraw(false);
+        }
+    }
+
+
+    // Create the chart
+    Highcharts.stockChart('price_change_graph', {
+        lang: {
+            loading: "Идет загрузка...",
+        },
+        plotOptions: {
+            series: {
+                dataGrouping: {
+                    enabled: false,
+                }
+            }
+        },
+        colors: colors,
+        rangeSelector: {
+            inputBoxWidth: 80,
+            buttonTheme: { // styles for the buttons
+                fill: '#1d2130',
+                style: {
+                    color: "#888a8d",
+                },
+                states: {
+                    hover: {
+                        fill: '#1d2130',
+                        style: {
+                            color: '#ffffff',
+                        }
+                    },
+                    select: {
+                        fill: '#1d2130',
+                        style: {
+                            fontWeight: "normal",
+                            color: "#ffffff"
+                        }
+                    }
+                },
+            },
+            allButtonsEnabled: false,
+            labelStyle: {
+                color: 'white',
+            },
+            inputBoxBorderColor: "#22273A",
+            inputEditDateFormat: "%Y-%m-%d",
+            inputDateFormat: "%Y-%m-%d",
+            inputBoxHeight: "2",
+            inputStyle: {
+                color: '#ffffff',
+                fill: "#22273A",
+                background: "#22273A"
+            },
+            inputPosition: {
+                x: 10
+            }
+        },
+        scrollbar: {
+            enabled: false,
+            liveRedraw: true,
+        },
+        tooltip: {
+            xDateFormat: '%d.%m.%Y',
+            valueSuffix: '%'
+        },
+        legend: {
+            enabled: true,
+            backgroundColor: "#22273A",
+            verticalAlign: "top",
+            itemHoverStyle: {
+                textDecoration: "underline",
+                color: "#ffffff"
+            },
+            itemStyle: {
+                textDecoration: "none",
+                color: "#ffffff",
+                fontSize: "12px",
+                fontWeight: "normal"
+            }
+        },
+        title: {
+            align: "left",
+            text: 'График доходности портфеля',
+            style: {
+                color: "#ffffff",
+                fontSize: "13px",
+            }
+        },
+        chart: {
+            height: 600,
+            backgroundColor: "#22273A",
+            plotBorderColor: "#111111",
+            style: {
+                fontFamily: "OpenSans-Light, sans-serif",
+            }
+        },
+        loading: {
+            style: {
+                fontSize: "35px",
+                color: "#ffffff",
+                backgroundColor: "#22273A",
+            }
+        },
+        labels: {
+            backgroundColor: "#ffffff",
+        },
+        navigator: {
+            adaptToUpdatedData: false
+        },
+        series: [{
+
+            showInNavigator: true,
+            name: 'Портфель',
+            lineWidth: 3,
+            data: ptf_price_change["data"],
+            type: 'spline',
+            tooltip: {
+                valueDecimals: 2,
+            },
+            color: colors[0],
+        },
+            {
+
+                name: benchmark_name,
+                showInNavigator: true,
+                lineWidth: 3,
+                data: bench_price_change["data"],
+                type: 'spline',
+                tooltip: {
+                    valueDecimals: 2
+                },
+                color: colors[1]
+            },
+            {
+
+                name: no_risk_rate["name"],
+                lineWidth: 3,
+                showInNavigator: true,
+                data: nr_price_change["data"],
+                type: 'spline',
+                tooltip: {
+                    valueDecimals: 2
+                },
+                color: colors[2],
+                visible: false,
+            }
+
+        ],
+        exporting: {
+            enabled: false
+        },
+        xAxis: {
+            events: {
+                afterSetExtremes: afterSetExtremes
+            },
+            startOnTick: false,
+            endOnTick: true,
+            dateTimeLabelFormats: {
+                day: {
+                    main: "%d.%m.%Y"
+                },
+                month: {
+                    main: "%m.%Y"
+                }
+            },
+            tickLength: 0,
+            lineColor: "#4f5464",
+            gridLineColor: "#4f5464",
+            gridLineWidth: 1,
+            tickPixelInterval: 164,
+            labels: {
+                style: {
+                    color: "#ffffff",
+                    fontSize: "12px"
+                }
+            }
+        },
+        yAxis: [{
+            lineColor: "#4f5464",
+            lineWidth: 1,
+            gridLineColor: "#4f5464",
+            labels: {
+                align: "left",
+                format: "{value} %",
+                style: {
+                    fontSize: "12px",
+                    color: "#ffffff"
+                }
+            }
+        }]
+    })
+    ;
+
+</script>
+<script>
+    var cash_by_asset_ticker = JSON.parse(analysis_data["cash_by_asset_ticker"]);
+    var count = Object.keys(cash_by_asset_ticker).length;
+    var base = "#039dd0";
+    var pieColors = (function () {
+        var colors = [],
+            i;
+
+        for (i = 0; i < count; i += 1) {
+            // Start out with a darkened base color (negative brighten), and end
+            // up with a much brighter color
+            colors.push(Highcharts.color(base).brighten((i) / (count + 42)).get());
+        }
+        return colors;
+    }());
+    Highcharts.chart('cash_by_asset_ticker', {
+        colors: pieColors,
+        chart: {
+
+            plotBackgroundColor: "#22273A",
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+            backgroundColor: "#22273A",
+            style: {
+                fontFamily: "OpenSans-Light, sans-serif",
+            }
+        },
+        title: {
+            text: 'Распределение по активам',
+            style: {
+                color: "#ffffff",
+                textTransform: "uppercase",
+                fontSize: "13px",
+                fontFamily: "OpenSans-Semibold, sans-serif",
+                width: "100%",
+                textAlign: "center"
+
+            }
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                minSize: 200,
+                allowPointSelect: true,
+                borderWidth: 0,
+                cursor: 'pointer',
+                dataLabels: {
+                    borderWidth: 0,
+                    enabled: true,
+                    distance: "20",
+                    connectorColor: "#ffffff",
+                    connectorShape: 'crookedLine',
+                    format: "{point.name}: <br>{point.percentage:.1f} %</br>",
+                    style: {
+                        fontWeight: "normal",
+                        fontSize: "11px",
+                        textOutline: null,
+                        color: "#ffffff",
+                        fontFamily: "OpenSans-Regular, sans-serif",
+
+                    }
+                },
+
+            }
+        },
+        series: [{
+            name: 'Активы',
+            colorByPoint: true,
+            data: cash_by_asset_ticker
+            ,
+        }],
+        exporting: {
+            enabled: false,
+        }
+    });
+</script>
+<script>
+    var cash_by_asset_type = JSON.parse(analysis_data["cash_by_asset_type"]);
+    Highcharts.chart('cash_by_asset_type', {
+        colors: ['#46CDFB', '#41C0EB', '#3DB6E0', '#39ACD6',
+            '#36A3CD', '#339CC5', '#3196BE', '#2E8DB4'],
+        chart: {
+            plotBackgroundColor: "#22273A",
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+            backgroundColor: "#22273A",
+        },
+        title: {
+            text: 'Распределение по классам активов',
+            style: {
+                textTransform: "uppercase",
+                color: "#ffffff",
+                fontSize: "12px",
+                fontFamily: "OpenSans-Semibold, sans-serif",
+                width: "100%",
+                textAlign: "center"
+
+            }
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                minSize: 200,
+                allowPointSelect: true,
+                borderWidth: 0,
+                cursor: 'pointer',
+                dataLabels: {
+                    distance: "20",
+                    connectorColor: "#ffffff",
+                    borderWidth: 0,
+                    enabled: true,
+                    format: "{point.name}: <br>{point.percentage:.1f} %</br>",
+                    softConnector: false,
+                    style: {
+                        fontWeight: "normal",
+                        fontSize: "11px",
+                        textOutline: null,
+                        color: "#ffffff",
+                        fontFamily: "OpenSans-Regular, sans-serif",
+
+                    }
+                },
+
+            }
+        },
+        series: [{
+            name: 'Активы',
+            colorByPoint: true,
+            data: cash_by_asset_type
+            ,
+        }],
+        exporting: {
+            enabled: false,
+        }
+    });
+</script>

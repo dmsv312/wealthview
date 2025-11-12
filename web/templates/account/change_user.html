@@ -1,0 +1,296 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% load account %}
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_style %}
+    <link rel="stylesheet" href="{% static 'base/css/alert.css' %}">
+    <link rel="stylesheet" href="{% static "autocomplete/css/styles.css" %}">
+{% endblock %}
+{% block extra_import %}
+    <script src="{% static 'base/js/date.min.js' %}"></script>
+    <script src="{% static 'account/js/account.js' %}"></script>
+    <script src="{% static 'utils/validate.js' %}"></script>
+    <script type="text/javascript" src="{% static 'autocomplete/js/jquery.autocomplete.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'autocomplete/js/jquery.ui.autocomplete.scroll.min.js' %}"></script>
+    <script src="{% static 'base/js/jquery.maskedinput.min.js' %}"></script>
+    {% include 'includes/init_csrf_token.html' %}
+{% endblock %}
+
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Wealth View - Личный кабинет</title>
+{% endblock %}
+<!------------------- HEADER ------------------->
+{% block header %}
+    {% include "includes/header_account.html" %}
+{% endblock %}
+
+<!------------------- CONTENT ------------------>
+{% block content %}
+    {% if active_tab == "home" %}
+        {% include "account/includes/add_operation.html" %}
+    {% endif %}
+    <div class="lc_common_block">
+        <!-- Прелоадер -->
+        {% include "backtest/input_data/includes/loader.html" %}
+        <a id="feedback_button" style="border: 0px; width: 50px; height: 50px; padding: 0px; z-index: 1000; cursor: pointer!important;" class="feedback_btn start_test"><img id="feedback_img" style="width: 100%; " src="{% static 'base/img/message.png' %}"/></a>
+        <div id="feedback_menu" class="feedback_div" style="display: inline-block; text-align: center; z-index: 1000; visibility: visible;">
+            <p style="font-weight: bold;" >Написать в мессенджер</p>
+            <div style="width: 45%; display: inline-block;" >
+                <a target="_blank" id="telegram_img" href="https://t.me/WealthView" style="border: 0px; width: 50px; height: 50px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/telegram.png' %}"/></a>
+                <label style="display: block; font-size: 10px; padding-top: 5px;">Telegram</label>
+            </div>
+            <div style="width: 45%; display: inline-block;" >
+                <a target="_blank" id="whatsapp_img" href="https://wa.me/79217931335" style="border: 0px; width: 50px; height: 50px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/wa.png' %}"/></a>
+                <label style="display: block; font-size: 10px; padding-top: 5px;">WhatsApp</label>
+            </div>
+        </div>
+        <div class="left_sidebar">
+            <div class="sidebar_item">
+
+                <a href="{% url 'risk_profile' %}" onclick="start_preloader();"
+                   class="sidebar_item_title js-sidebar_item_title">
+                    <div>
+                        <img src="{% static 'base/img/icon-risk-profile.svg' %}" alt="">
+                        <span>Риск-профиль</span>
+                    </div>
+                </a>
+
+            </div>
+            <div class="sidebar_item">
+                {% if request.user.profile.profile_portfolios.count == 0 %}
+                    <div class="sidebar_item_title active">
+                {% else %}
+                    <div class="sidebar_item_title js-sidebar_item_dropdown">
+                {% endif %}
+                    <div>
+                        <img src="{% static 'base/img/bag.svg' %}" alt="">
+                        <span>Мои портфели</span>
+                    </div>
+                    <img src="{% static 'base/img/arrow_1.svg' %}" alt="" class="rotate">
+                </div>
+                {% if request.user.profile.profile_portfolios.count == 0 %}
+                    <div class="sub_sidebar_item show">
+                {% else %}
+                    <div class="sub_sidebar_item show" style="display: none;">
+                {% endif %}
+                {% if request.user.profile.profile_portfolios.count < 3 %}
+                    <ul class="treeCSS">
+                {% else %}
+                    <ul class="treeCSS treeCSS_mod">
+                {% endif %}
+                        <li>
+                            <ul class="nav nav-tabs" id="myTab_bags" role="tablist">
+                                {% with current_portfolio=portfolio portfolios=request.user.profile.profile_portfolios.all %}
+                                    {% for portfolio in portfolios %}
+                                        <li class="nav-item {% if portfolio == current_portfolio %} active {% endif %}">
+                                            <a class="nav-link {% if portfolio == current_portfolio %} active {% endif %}"
+                                               id="bag_1-tab"
+                                               href="{% url "account-page-portfolios-detail" portfolio.id %}"
+                                               aria-controls="bag_1" aria-selected="true"
+                                               data-portfolio="{{ portfolio.pk }}">
+                                               {% if portfolio.name != "" %}
+                                                <div onclick="start_preloader();"><i class="far fa-circle"></i> {{ portfolio.name}}</div>
+                                               {% else %}
+                                                <div onclick="start_preloader();"><i class="far fa-circle"></i> Портфель {{ forloop.counter }}</div>
+                                               {% endif %}
+
+                                                    <i class="fas fa-cog js-modal-inner change" data-mfp-src="#modal_change_portfolio"></i>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endwith %}
+                            </ul>
+                        </li>
+                    </ul>
+
+                    {% if request.user.profile.profile_portfolios.count < 3 %}
+                        <hr class="sidebar_hr">
+                        <a href="#modal_add_portfolio" class="add_bt_line js-modal-inner">
+                            <img src="{% static 'base/img/add_bt.svg' %}" alt="">
+                            Новый Портфель
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="sidebar_item">
+
+                    <a href="{% url 'change_user_settings' %}" onclick="start_preloader();"
+                       class="sidebar_item_title js-sidebar_item_title active">
+                        <div>
+                            <img src="{% static 'base/img/user_icon_white.svg' %}" alt="">
+                            <span>Аккаунт</span>
+                        </div>
+                    </a>
+
+            </div>
+        </div>
+        <div class="lc_right_content">
+            <div class="lc_right_content_container">
+                <div class="tab-content b-account-info" id="myTabContent_bag_1">
+                    <div class="modal_title b-account-info__title">
+                        Информация об аккаунте
+                    </div>
+                    <div class="b-account-info__form">
+                        <div class="b-account-info__form-item">
+                            <label class="b-account-info__form-label">Электронная почта (логин)</label>
+                            <input id="user_email" style="cursor: not-allowed;" type="text" value="{{ user.email }}" readonly>
+                        </div>
+                        <a id="change_password_modal_btn" href="#change_password_modal"
+                           class="blue_btn js-modal-inner" style="cursor: pointer;">Изменить пароль</a>                 </div>
+                    <div class="modal_title b-account-info__title">
+                        Telegram-бот
+                    </div>
+                    <div class="b-account-info__social">
+                        <div class="b-account-info__social-text">
+                            <p>
+                                Wealth View Bot позволяет иметь быстрый доступ к справочной информации и получать
+                                уведомления по портфелям, которые находятся в Вашем личном кабинете.
+                            </p>
+                        </div>
+                        {% if request.user.profile.tg_chat_id %}
+                            <form method="POST" action="{% url 'bot_revoke' %}">
+                                {% csrf_token %}
+                                <input type="submit" class="blue_btn" value="Отключить">
+                            </form>
+                        {% else %}
+                            <a target="_blank" href="{{ request.user.profile.get_bot_link }}" class="blue_btn">Подключить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div> <!-- END lc_right_content_container -->
+        </div> <!-- END lc_right_content -->
+    </div> <!-- END LC COMMON BLOCK -->
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    {% include "auth_sys/includes/mobile_menu.html" %}
+    <div id="overlay"></div>
+    {% include "account/includes/delete_portfolio_modal.html" %}
+    {% include 'account/includes/risk_profile_modal.html' %}
+    {% include "account/includes/change_password_modal.html" %}
+    {% include "account/includes/change_portfolio.html" %}
+    {% include "account/includes/add_portfolio.html" %}
+    {% include "backtest/analyze/includes/modal_compare_asset.html" %}
+
+    {% include "includes/modal_mobile_horiz.html" %}
+    <script type="text/javascript" src="{% static 'autocomplete/js/autocomplete.js' %}"></script>
+    <script type="text/javascript" src="{% static 'account/js/modal_effects_account.js' %}"></script>
+        <script type="text/javascript">
+            var active = false;
+            var feedback_button = document.getElementById("feedback_button"); 
+            var feedback_menu = document.getElementById("feedback_menu");    
+            var feedback_img = document.getElementById("feedback_img");    
+            var telegram_img = document.getElementById("telegram_img");  
+            var whatsapp_img = document.getElementById("whatsapp_img");  
+    
+            feedback_menu.style.visibility = "hidden";
+            
+            feedback_button.addEventListener("click", function(){
+                if (active == false) {
+                    telegram_img.style.display = "";
+                    whatsapp_img.style.display = "";
+                    active = true;
+                    feedback_menu.style.visibility = "visible";
+                    feedback_img.src = "{% static 'base/img/message_close.png' %}";
+                }
+                else {
+                    telegram_img.style.display = "none";
+                    whatsapp_img.style.display = "none";
+                    active = false;
+                    feedback_menu.style.visibility = "hidden";
+                    feedback_img.src = "{% static 'base/img/message.png' %}";
+                }
+            });
+        </script>
+    {% if add_portfolio_analysis_errors %}
+        <script type="text/javascript">
+            var add_portfolio_error = JSON.parse("{{data|escapejs}}");
+
+            document.getElementById("add_portfolio_name").value = add_portfolio_error.add_portfolio_data_operation.portfolio_name;
+            document.getElementById("add_portfolio_benchmark").value = add_portfolio_error.add_portfolio_data_operation.benchmark;
+            document.getElementById("add_portfolio_currency").value = add_portfolio_error.add_portfolio_data_operation.currency;
+            document.getElementById("add_portfolio_asset_cost").value = add_portfolio_error.add_portfolio_data_operation.cost;
+
+            let date = add_portfolio_error.add_portfolio_data_operation.operation_date.split("-");
+            let html_date = date[2] + "-" + date[1] + "-" + date[0];
+            document.getElementById("add_portfolio_operation_date").value = html_date;
+
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("modal_add_portfolio").style.display = "block";
+        </script>
+    {% endif %}
+    {% if analysis_errors %}
+                <script type="text/javascript">
+                document.getElementById("overlay").style.display = "block";
+                document.getElementById("modal_made_operation").style.display = "block";
+
+                let error_date = document.getElementById("error_date");
+                let error_operation_type = document.getElementById("error_operation_type");
+
+                let error_asset_type = document.getElementById("error_asset_type");
+                let error_asset_pk = document.getElementById("error_asset_pk");
+                let error_asset_name = document.getElementById("error_asset_name");
+
+                let error_asset_count = document.getElementById("error_asset_count");
+                let error_asset_price = document.getElementById("error_asset_price");
+                let error_asset_cost = document.getElementById("error_asset_cost");
+
+                //обрабатываем и переводим дату в другой формат
+                let date = error_date.value.split("-");
+                let html_date = date[2] + "-" + date[1] + "-" + date[0];
+                console.log(html_date);
+                document.getElementById("operation_date").value = html_date;
+                console.log(document.getElementById("operation_date").value);
+
+                //заполняем тип операции, вставляем текст в <p> и добавляем ему атрибут data-value
+                //покупка - Buy, продажа - Sell, дивиденд - Dividend, пополнение - Input, вывод - Output
+                document.getElementById("operation_type").innerHTML = error_operation_type.value.toString().toLowerCase();
+                if (error_operation_type.value.toString().toLowerCase() === "покупка")
+                    document.getElementById("operation_type").setAttribute("data-value", "Buy");
+                if (error_operation_type.value.toString().toLowerCase() === "продажа")
+                    document.getElementById("operation_type").setAttribute("data-value", "Sell");
+                if (error_operation_type.value.toString().toLowerCase() === "дивиденд")
+                    document.getElementById("operation_type").setAttribute("data-value", "Dividend");
+                if (error_operation_type.value.toString().toLowerCase() === "пополнение")
+                    document.getElementById("operation_type").setAttribute("data-value", "Input");
+                if (error_operation_type.value.toString().toLowerCase() === "вывод")
+                    document.getElementById("operation_type").setAttribute("data-value", "Output");
+
+                //заполняем тип актива (атрибут data-value), его имя и pk
+                //ETF - ETF, акция - asset, денежные средства - cash
+                if (error_asset_type.value.toString().toLowerCase() === "акция"){
+                    document.getElementById("asset_type").innerHTML = "акция";
+                    document.getElementById("asset_type").setAttribute("data-value", "asset");
+                }
+                if (error_asset_type.value.toString().toLowerCase() === "etf"){
+                    document.getElementById("asset_type").innerHTML = "ETF";
+                    document.getElementById("asset_type").setAttribute("data-value", "ETF");
+                }
+                if (error_asset_type.value.toString().toLowerCase() === "cash"){
+                    document.getElementById("asset_type").innerHTML = "денежные средства";
+                    document.getElementById("asset_type").setAttribute("data-value", "cash");
+                }
+
+                document.getElementById("asset_name").value = error_asset_name.value;
+                document.getElementById("asset_name").setAttribute("data-pk", error_asset_pk.value.toString());
+
+                //заполняем количество, цену и стоимость
+                document.getElementById("asset_count").value = error_asset_count.value;
+                document.getElementById("asset_price").value = error_asset_price.value;
+                document.getElementById("asset_cost").value = error_asset_cost.value;
+
+            </script>
+    {% endif %}
+
+{% endblock %}
+{% block charts_js %}
+    {% if active_tab == "portfolio_analyze" %}
+        {% include 'account/analyze/charts.html' %}
+    {% endif %}
+{% endblock %}
+<!------------------- FOOTER ------------------->
+{% block footer %}
+    {% include "includes/footer_account.html" %}
+{% endblock %}
+

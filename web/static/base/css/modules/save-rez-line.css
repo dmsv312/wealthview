@@ -1,0 +1,27 @@
+.save_rez_line {
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+}
+
+.save_rez_line .blue_btn {
+    font-size: 14px;
+    font-family: "OpenSans-Regular", sans-serif;
+    display: inline-block;
+}
+
+.about_block .save_rez_line {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+    .save_rez_line .blue_btn {
+        margin-right: 0!important;
+    }
+
+    .save_rez_line {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

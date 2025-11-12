@@ -1,0 +1,41 @@
+{% load static %}
+
+{% if categories %}
+    <div class="category_block">
+        <div class="category_title">
+            Категории
+        </div>
+        <div class="category_items">
+            <form action="" method="get" id="form_switcher" style="display: none;">
+                {{ filter.form.as_p }}
+                <input type="submit"/>
+            </form>
+            <div class="selected_filter"></div>
+            {% for category in categories %}
+                {% if category.title == filter_category.title or category.title == article.category.title %}
+                    <div class="sidebar_item_active sidebar_item">
+                        <div class="sidebar_item_title">
+                            <a class="sidebar_nav_item_active" href="/articles/{{ category.slug }}">
+                            <div>
+                                <img src="{% static 'base/img/ellipse.svg' %}" alt="">
+                                <span>{{ category.title }}</span>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="sidebar_item">
+                        <div class="sidebar_item_title">
+                            <a class="sidebar_nav_item" href="/articles/{{ category.slug }}">
+                            <div>
+                                <img src="{% static 'base/img/ellipse.svg' %}" alt="">
+                                <span>{{ category.title }}</span>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+</div>
+{% endif %}

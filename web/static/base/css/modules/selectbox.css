@@ -1,0 +1,145 @@
+div.selectBox {
+    width: 100%;
+    position: relative;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid #686c7a;
+    padding: 10px 20px;
+}
+
+div.selectBox p.valueTag {
+    cursor: pointer;
+    transition: 0.2s;
+    margin-bottom: 0;
+}
+
+div.selectBox input.valueTag {
+    border: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+div.selectBox > img.arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translate(-10px, -50%);
+}
+
+ul.selectMenuBox {
+    width: calc(100% + 2px);
+    border: 1px solid #686c7a;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: calc(100% + 3px);
+    left: -1px;
+    margin: 0;
+    background: #22273a;
+    z-index: 999;
+}
+
+ul.selectMenuBox .option {
+    display: block;
+    cursor: pointer;
+    padding: 15px 20px;
+}
+
+ul.selectMenuBox .option {
+    /*color: #fff;*/
+}
+
+ul.selectMenuBox .option:hover {
+    color: #fff;
+    background: #1a1d2b;
+    transition: 0.2s;
+}
+
+.sd_line_2 .zoom_line ul.selectMenuBox {
+    width: calc(100% - 48px);
+    top: calc(100% + 10px);
+    background: #22273a;
+}
+
+.ui-menu .ui-menu-item a {
+    /*background: red;*/
+    height: 10px;
+    font-size: 8px;
+}
+
+.ui-autocomplete {
+    background: #22273a;
+
+    color: #fff;
+    font-size: 13px;
+    border: 1px solid #686c7a;
+    z-index: 9999 !important;
+}
+
+.selectBox.autocomplete_body .ui-autocomplete {
+    left: 0px !important;
+    top: 38px !important;
+}
+
+.change_portfolio > .selectBox.autocomplete_body .ui-autocomplete {
+    width: 380px !important;
+}
+
+.portfolio_settings > .selectBox.autocomplete_body .ui-autocomplete {
+    width: 211px !important;
+    scrollbar-color: #1c2133 #373e58; /* «цвет ползунка» «цвет полосы скроллбара» */
+    scrollbar-width: thin; /* толщина */
+}
+
+.portfolio_settings > .selectBox.autocomplete_body .ui-autocomplete::-webkit-scrollbar {
+    width: 15px; /* ширина для вертикального скролла */
+    background-color: #373e58;
+}
+
+.portfolio_settings > .selectBox.autocomplete_body .ui-autocomplete::-webkit-scrollbar-thumb {
+    background-color: #1c2133;
+}
+
+.portfolio_settings > .selectBox.autocomplete_body .ui-autocomplete::-webkit-scrollbar-thumb:hover {
+    background-color: #242b42;
+}
+
+.ui-menu-item {
+    padding: 15px 0px 15px 20px;
+    border: none;
+    white-space: pre-wrap !important;
+}
+
+.ui-menu-item * {
+    background: transparent !important;
+    /*background: #1a1d2b !important;*/
+    border: none !important;
+}
+
+/*.ui-menu-item.focused div, .ui-menu-item.focused,*/
+/*.ui-menu-item-wrapper.ui-state-active,*/
+.ui-menu-item:hover div,
+.ui-menu-item:hover {
+    border: none;
+    background: #1a1d2b;
+}
+
+.ui-widget.ui-widget-content {
+    border: 1px solid #686c7a;
+    scrollbar-color: #1c2133 #373e58; /* «цвет ползунка» «цвет полосы скроллбара» */
+    scrollbar-width: thin; /* толщина */
+}
+
+.ui-widget.ui-widget-content::-webkit-scrollbar {
+    width: 15px; /* ширина для вертикального скролла */
+    background-color: #373e58;
+}
+
+.ui-widget.ui-widget-content::-webkit-scrollbar-thumb {
+    background-color: #1c2133;
+}
+
+.ui-widget.ui-widget-content::-webkit-scrollbar-thumb:hover {
+    background-color: #242b42;
+}

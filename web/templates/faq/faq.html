@@ -1,0 +1,209 @@
+{% extends "wrapper.html" %}
+{% load static %}
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+    <script src="{% static "base/js/switch_all_page.js" %}"></script>
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Поддержка wealthview.ru</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+    <!-- Прелоадер -->
+    {% include "backtest/input_data/includes/loader.html" %}
+    <div class="all_title_block">
+        <h1>Поддержка</h1>
+    </div>
+    <div class="breadcrumbs_block">
+        <div class="container">
+            <div class="breadcrumbs_line">
+                <a href="{% url 'main-page' %}">Главная</a>
+                <a href="{% url 'faq-page' %}">Поддержка</a>
+            </div>
+        </div>
+    </div>
+    <div class="main_content">
+        <div class="container">
+            <div class="faq_common_block">
+                <div class="faq_left_block">
+                    <div class="accordion_block">
+                        <div class="acc_item">
+                            <div class="acc_title active">
+                                1. Какие активы поддерживает веб-сервис?
+                                <img src="{% static 'base/img/icon-arrow-down.svg' %}" class="rotate true" alt="">
+                            </div>
+                            <div class="sub_acc_item show open">
+                                Все акции, торгующиеся на Московской Бирже, в т.ч. ETF и БПИФы, а также NYSE, NASDAQ, NYSE Arca, BATS, на которых 
+                                торгуются ETF. На очереди добавление ПИФов российских УК, облигаций и еврооблигаций, торгующихся а Московской бирже.
+                                Мы поддерживаем все основные мировые индексы, чтобы Вы могли выбирать релевантный бенчмарк и безрисковую ставку 
+                                (risk free rate) для анализа портфеля. На данным момент мы поддерживаем две валюты: RUB и USD. 
+                            </div>
+                        </div>
+
+                        <div class="acc_item">
+                            <div class="acc_title">
+                                2. Сервис бесплатный?
+                                <img src="{% static 'base/img/icon-arrow-down.svg' %}" class="rotate" alt="">
+                            </div>
+                            <div class="sub_acc_item">
+                                Мы работаем в бета-версии, поэтому сейчас сайт абсолютно бесплатный. 
+                                Регистрация не подразумевает каких-либо обязательств или подписок. Для авторизации необходим адрес электронной почты.
+                            </div>
+                        </div>
+
+                        <div class="acc_item">
+                            <div class="acc_title">
+                                3. Я могу совершать здесь реальные сделки на бирже?
+                                <img src="{% static 'base/img/icon-arrow-down.svg' %}" class="rotate" alt="">
+                            </div>
+                            <div class="sub_acc_item">
+                                Нет, мы не являемся брокером. Вы можете воспроизводить свои реальные портфели либо работать с виртуальными портфелями. 
+                                Мы уже создаем решение, которое позволит воспроизводить портфели в автоматическом режиме.
+                            </div>
+                        </div>
+
+                        <div class="acc_item">
+                            <div class="acc_title">
+                                4. Как добавить первую операцию в своем портфеле?
+                                <img src="{% static 'base/img/icon-arrow-down.svg' %}" class="rotate" alt="">
+                            </div>
+                            <div class="sub_acc_item">
+                                Необходимо воспользоваться формой Добавления транзакции в личном кабинете. Первой транзакцией в портфеле должно быть «пополнение»
+                                 - так мы сможем корректно определять долю добавляемых активов от портфеля в целом, 
+                                 что влияет на результаты работы алгоритмов анализа.
+                            </div>
+                        </div>
+
+                        <div class="acc_item">
+                            <div class="acc_title">
+                                5. Можно ли учитывать «короткие» позиции и позиции «с плечом»?
+                                <img src="{% static 'base/img/icon-arrow-down.svg' %}" class="rotate" alt="">
+                            </div>
+                            <div class="sub_acc_item">
+                                Нет, на данный момент мы не предоставляем такую возможность. Также на данный момент наш риск-менеджмент 
+                                не проходят фьючерсы, опционы и другие производные финансовые инструменты.
+                            </div>
+                        </div>
+
+                        <div class="acc_item">
+                            <div class="acc_title">
+                                6. Не могу разобраться как и зачем всем этим пользоваться.
+                                <img src="{% static 'base/img/icon-arrow-down.svg' %}" class="rotate" alt="">
+                            </div>
+                            <div class="sub_acc_item">
+                                На сайте Вы можете найти статьи, которые мы пишем, чтобы поделиться опытом о том, как теоретические знания 
+                                могут помочь реально повысить эффективность принимаемых решений, т.е. получать выше доходность при меньшем 
+                                риске, который соответсвует профилю инвестора. В статьях Вы найдете не только объяснение и способ расчета многих 
+                                показателей, но и практические советы о том, как это применять. Расчеты и обработку большого объема данных мы взяли на себя.
+                            </div>
+                        </div>
+                        <div class="acc_item">
+                            <div class="acc_title">
+                                7. Где финансовые отчеты компаний и фундаментальный анализ?
+                                <img src="{% static 'base/img/icon-arrow-down.svg' %}" class="rotate" alt="">
+                            </div>
+                            <div class="sub_acc_item">
+                                Мы считаем, что для частного инвестора успех в инвестициях на 91.5% зависит от распределение активов (asset allocation), 
+                                4.6% - выбор ценных бумаг, 1.8% - ребалансировки, 2.1% - других факторов, в т.ч. выбора времени для покупки или продажи 
+                                активов. Поэтому финансовые отчеты, фундаментальный анализ, а также таблицы-скриннеры для поиска инвестиционных идей 
+                                появятся у нас позднее.
+                            </div>
+                        </div>
+                        <div class="acc_item">
+                            <div class="acc_title">
+                                8. Дисклеймер
+                                <img src="{% static 'base/img/icon-arrow-down.svg' %}" class="rotate" alt="">
+                            </div>
+                            <div class="sub_acc_item">
+                                Любые инвестиции сопряжены с риском. На данный момент любой материал на сайте не является индивидуальной инвестиционной 
+                                рекомендацией. Доходность в прошлом не гарантирует результат в будущем. Будьте разумными инвесторами и используйте 
+                                наш сервис для повышения эффективности принимаемых Вами решений.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="faq_right_block">
+                    <form class="call_us" action="{% url 'send_form' %}" id="faq_form" method="post">
+                        {% csrf_token %}
+                        <div class="form_title">
+                            <span>Не нашли ответ ?</span>
+                            <p>Напишите нам, заполнив форму ниже.</p>
+                        </div>
+                        <div class="form_input_block">
+                            <label>Ваше имя:</label>
+                            <div class="form_input">
+                                <input id="name" type="text" name="name" required>
+                                <img src="{% static 'base/img/user_icon_form.svg' %}" alt="">
+                            </div>
+
+                            <label>Ваш Email:</label>
+                            <div class="form_input">
+                                <input id="faq_email" type="text" name="faq_email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                <img src="{% static 'base/img/envelope_form.svg' %}" alt="">
+                            </div>
+
+                            <label>Сообщение:</label>
+                            <div class="form_input">
+                                <textarea id="message" name="message" cols="30" rows="10" required></textarea>
+                                <img src="{% static 'base/img/message_form.svg' %}" alt="">
+                            </div>
+                            {% if process == 'failure' %}
+                                <label> Введите адекватные данные </label>
+                            {% endif %}
+
+                            <button id="send_form" type="submit" class="blue_btn">Отправить</button>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="feedback_button" style="border: 0px; width: 50px; height: 50px; padding: 0px; z-index: 1000; cursor: pointer!important;" class="feedback_btn start_test"><img id="feedback_img" style="width: 100%; " src="{% static 'base/img/message.png' %}"/></a>
+    <div id="feedback_menu" class="feedback_div" style="display: inline-block; text-align: center; z-index: 1000; visibility: visible;">
+        <p style="font-weight: bold;" >Написать в мессенджер</p>
+        <div style="width: 45%; display: inline-block;" >
+            <a target="_blank" id="telegram_img" href="https://t.me/WealthView" style="border: 0px; width: 50px; height: 50px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/telegram.png' %}"/></a>
+            <label style="display: block; font-size: 10px; padding-top: 5px;">Telegram</label>
+        </div>
+        <div style="width: 45%; display: inline-block;" >
+            <a target="_blank" id="whatsapp_img" href="https://wa.me/79217931335" style="border: 0px; width: 50px; height: 50px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/wa.png' %}"/></a>
+            <label style="display: block; font-size: 10px; padding-top: 5px;">WhatsApp</label>
+        </div>
+    </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    <div id="overlay" class="simple_page"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+    {% include "auth_sys/includes/mobile_menu.html" %}
+    <script type="text/javascript">
+        var active = false;
+        var feedback_button = document.getElementById("feedback_button"); 
+        var feedback_menu = document.getElementById("feedback_menu");    
+        var feedback_img = document.getElementById("feedback_img");    
+        var telegram_img = document.getElementById("telegram_img");  
+        var whatsapp_img = document.getElementById("whatsapp_img");  
+
+        feedback_menu.style.visibility = "hidden";
+        
+        feedback_button.addEventListener("click", function(){
+            if (active == false) {
+                telegram_img.style.display = "";
+                whatsapp_img.style.display = "";
+                active = true;
+                feedback_menu.style.visibility = "visible";
+                feedback_img.src = "{% static 'base/img/message_close.png' %}";
+            }
+            else {
+                telegram_img.style.display = "none";
+                whatsapp_img.style.display = "none";
+                active = false;
+                feedback_menu.style.visibility = "hidden";
+                feedback_img.src = "{% static 'base/img/message.png' %}";
+            }
+        });
+    </script>
+{% endblock %}

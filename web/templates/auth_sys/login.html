@@ -1,0 +1,31 @@
+{% extends "wrapper.html" %}
+
+{% block login %}
+    <div id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Авторизация</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <input type="email" name="login" class="form-control" placeholder="Email" style="height: 40px; margin: 3%; width: 94%">
+                        <input type="password" name="password" class="form-control" placeholder="Пароль" style="height: 40px; margin: 3%; width: 94%">
+                        {% if login_error %}
+                            <label class="text-danger">{{ login_error }}</label>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Войти</button>
+                        <a href="{% url 'signup' %}" class="btn btn-outline-primary">Регистрация</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

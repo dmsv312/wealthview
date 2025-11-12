@@ -1,0 +1,63 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+    <script type="text/javascript" src="{% static 'base/js/date.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static "autocomplete/css/styles.css" %}">
+    <script type="text/javascript" src="{% static 'autocomplete/js/jquery.autocomplete.min.js' %}"></script>
+    {% include 'includes/init_csrf_token.html' %}
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Исходные данные | Риск-профилирование</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+  <!-- Прелоадер -->
+    {% include "backtest/input_data/includes/loader.html" %}
+    <div class="container">
+        <div class="bag_nav_line">
+            {% include 'risk-profile/includes/risk-profile_text_line.html' %}
+            <div class="circle_line">
+                <i class="fas fa-circle  "></i>
+                <i class="fas fa-circle "></i>
+                <i class="fas fa-circle cg"></i>
+                <hr>
+            </div>
+        </div>
+        <div class="content_block bag">
+            <div class="sd_block">
+                <div class="sd_form_block">
+                    <div class="save_rez_line">
+                        <form action="{% url 'risk-input-page' %}" id="test_form" method="post">
+                            {% csrf_token %}
+                                Вопрос1
+                                <br><br><input type="radio" id="q1a1" name="q1" value="5">Ответ1
+                                <br><br><input type="radio" id="q1a2" name="q1" value="2">Ответ2
+                                <br><br><input type="radio" id="q1a3" name="q1" value="333">Ответ3
+                                <br><br><input type="radio" id="q1a4" name="q1" value="4">Ответ4
+                                <br><br>
+                                <button id="risk-input-page" type="submit">Ответить</button>
+                        </form>
+                </div>
+                   {{ result }}
+                    <p>{{ test }}</p>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    <div id="overlay"></div>
+    {% include "includes/modal_mobile_horiz.html" %}
+    {% include "backtest/input_data/includes/modal_add_active.html" %}
+        {% include "auth_sys/includes/mobile_menu.html" %}
+    {% include "auth_sys/includes/auth_modal.html" %}
+    <script type="text/javascript" src="{% static 'backtest/input_data/loader.js' %}"></script>
+    <script type="text/javascript" src="{% static "utils/forms.js" %}"></script>
+    <script type="text/javascript" src="{% static "utils/validate.js" %}"></script>
+    <script type="text/javascript" src="{% static 'autocomplete/js/autocomplete.js' %}"></script>
+{% endblock %}
+

@@ -1,0 +1,66 @@
+{% load static %}
+<div>
+    <label>начальная дата</label>
+    {% if analyze_data %}
+        <input id="start_date" type="text" name="start_date" class="date_1" required value="{{ analyze_data.start_date }}"
+               pattern="^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$">
+    {% else %}
+        <input id="start_date" type="text" name="start_date" class="date_1" required
+               pattern="^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$">
+    {% endif %}
+    <article>
+        <div class="single"></div>
+    </article>
+</div>
+<div>
+    <label>конечная дата</label>
+    {% if analyze_data %}
+        <input id="end_date" type="text" name="end_date" class="date_2" required value="{{ analyze_data.end_date }}"
+               pattern="^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$">
+    {% else %}
+        <input id="end_date" type="text" name="end_date" class="date_2" required
+               pattern="^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$">
+    {% endif %}
+    <article>
+        <div class="single"></div>
+    </article>
+</div>
+<div>
+    <label>Ребалансировка</label>
+    <div id="rebalancing_selectBox" class="selectBox">
+        <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+        {% if analyze_data %}
+            <p class=valueTag name=select>{{ analyze_data.rebalance_value }}</p>
+            <input id="rebalance" type="hidden" name="rebalancing" value="{{ analyze_data.rebalance_id }}">
+        {% else %}
+            <p class=valueTag name=select>Без ребалансировки</p>
+            <input id="rebalance" type="hidden" name="rebalancing" value="None">
+        {% endif %}
+        <ul class="selectMenuBox">
+            <li id="None" class=option>Без ребалансировки</li>
+            <li id="month" class=option>Ежемесячная</li>
+            <li id="quartal" class=option>Ежеквартальная</li>
+            <li id="half_year" class=option>Полугодовая</li>
+            <li id="year" class=option>Годовая</li>
+        </ul>
+    </div>
+
+</div>
+<div>
+    <label>валюта</label>
+    <div id="currency_selectBox" class="selectBox">
+        <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+        {% if analyze_data %}
+            <p class=valueTag name=select>{{ analyze_data.currency }}</p>
+            <input type="hidden" name="currency" value="{{ analyze_data.currency }}">
+        {% else %}
+            <p class=valueTag name=select>{{ currencies.0.ticker }}</p>
+            <input type="hidden" name="currency" value="RUB">
+        {% endif %}
+        <ul class="selectMenuBox">
+            {% for currency in currencies %}
+                <li class="option currency_option">{{ currency.ticker }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

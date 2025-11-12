@@ -1,0 +1,128 @@
+{% extends "wrapper.html" %}
+{% load static %}
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+    <script type="text/javascript" src="{% static 'base/js/date.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'autocomplete/js/jquery.autocomplete.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'autocomplete/js/jquery.ui.autocomplete.scroll.min.js' %}"></script>
+    <script src="{% static 'base/js/jquery.maskedinput.min.js' %}"></script>
+    {% include 'includes/init_csrf_token.html' %}
+{% endblock %}
+{% block extra_style %}
+    <link rel="stylesheet" href="{% static "autocomplete/css/styles.css" %}">
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Бэк-тест портфеля</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+    <!-- Прелоадер -->
+    {% include "backtest/input_data/includes/loader.html" %}
+    <div class="container">
+        <div class="bag_nav_line">
+
+        </div>
+        <div class="content_block bag">
+            <div class="sd_block">
+                <div class="sd_title_block">
+                    <h1>Бэк-тест портфеля</h1>
+                </div>
+                <div class="sd_desc">
+                    <p>Позволяет проанализировать поведение заданного портфеля на историческом периоде, чтобы сформировать правильные
+                        ожидания относительно риска, доходности и взаимосвязи активов. Позволяет наглядным образом увидеть эффект
+                        диверсификации при инвестировании в различные классы активов.</p>
+                </div>
+                <div class="sd_form_block">
+                    <form id="sd_form" class="lu" method="get" action="{% url "backtest-analyze-page" %}"
+                    onsubmit="return validate_submit_backtest()">
+                        <div class="sd_line_1 sd_line">
+                            {% include "backtest/input_data/includes/base_data.html" %}
+                        </div>
+                        <div class="sd_line_2 sd_line">
+                            {% include "backtest/input_data/includes/benchmarks_data.html" %}
+                        </div>
+                        <div class="sd_line_3 sd_line" style="margin-bottom: 0;">
+                            {% include "backtest/input_data/includes/assets_data.html" %}
+                        </div>
+                        <div class="save_rez_line" style="padding-top: 0;">
+                            <input id="submit_portfolio" class="btn blue_btn submit_input" type="submit"
+                                   value="Анализировать портфель">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <a id="feedback_button" style="border: 0px; width: 50px; height: 50px; padding: 0px; z-index: 1000; cursor: pointer!important;" class="feedback_btn start_test"><img id="feedback_img" style="width: 100%; " src="{% static 'base/img/message.png' %}"/></a>
+    <div id="feedback_menu" class="feedback_div" style="display: inline-block; text-align: center; z-index: 1000; visibility: visible;">
+        <p style="font-weight: bold;" >Написать в мессенджер</p>
+        <div style="width: 45%; display: inline-block;" >
+            <a target="_blank" id="telegram_img" href="https://t.me/WealthView" style="border: 0px; width: 50px; height: 50px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/telegram.png' %}"/></a>
+            <label style="display: block; font-size: 10px; padding-top: 5px;">Telegram</label>
+        </div>
+        <div style="width: 45%; display: inline-block;" >
+            <a target="_blank" id="whatsapp_img" href="https://wa.me/79217931335" style="border: 0px; width: 50px; height: 50px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/wa.png' %}"/></a>
+            <label style="display: block; font-size: 10px; padding-top: 5px;">WhatsApp</label>
+        </div>
+    </div>
+    <!-- тултип -->
+    <div class="tooltip_templates" style="display: none;">
+        <div id="tooltip_bench">
+            <div class="info_block_title">
+                Бенчмарк
+            </div>
+            <div class="info_block_text">
+                <p>Показатель, применяемый в качестве эталонного для сравнения.</p>
+                <p>Как правило, применяется фондовый индекс, который наиболее точно «описывает» Вашу стратегию.</p>
+                <p>Например, если Вы строите портфель из акций широкого рынка США, то лучше выбрать индекс S&P500 в качестве бенчмарка.</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    <div id="overlay"></div>
+    {% include "includes/modal_mobile_horiz.html" %}
+    {% include "backtest/input_data/includes/modal_add_active.html" %}
+    {% include "auth_sys/includes/mobile_menu.html" %}
+    {% include "auth_sys/includes/auth_modal.html" %}
+
+    <script type="text/javascript" src="{% static 'backtest/input_data/loader.js' %}"></script>
+    <script type="text/javascript" src="{% static "utils/forms.js" %}"></script>
+    <script type="text/javascript" src="{% static "utils/validate.js" %}"></script>
+    <script type="text/javascript" src="{% static 'backtest/input_data/asset_manager.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backtest/input_data/validate.js' %}"></script>
+    <script type="text/javascript" src="{% static 'autocomplete/js/autocomplete.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backtest/input_data/modal_effects_backtest.js' %}"></script>
+    <script type="text/javascript">
+        var active = false;
+        var feedback_button = document.getElementById("feedback_button"); 
+        var feedback_menu = document.getElementById("feedback_menu");    
+        var feedback_img = document.getElementById("feedback_img");    
+        var telegram_img = document.getElementById("telegram_img");  
+        var whatsapp_img = document.getElementById("whatsapp_img");  
+
+        feedback_menu.style.visibility = "hidden";
+        
+        feedback_button.addEventListener("click", function(){
+            if (active == false) {
+                telegram_img.style.display = "";
+                whatsapp_img.style.display = "";
+                active = true;
+                feedback_menu.style.visibility = "visible";
+                feedback_img.src = "{% static 'base/img/message_close.png' %}";
+            }
+            else {
+                telegram_img.style.display = "none";
+                whatsapp_img.style.display = "none";
+                active = false;
+                feedback_menu.style.visibility = "hidden";
+                feedback_img.src = "{% static 'base/img/message.png' %}";
+            }
+        });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% load static %}
+
+<div id="mobile_menu_block" class="mfp-hide">
+    <nav>
+        <ul>
+            <li><a href="/risk_profile/">Сформировать портфель</a></li>
+            <li><a href="/backtest/input_data/">Бэк-тест</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/account/">Личный кабинет</a></li>
+            {% else %}
+                <li><a class="js-modal mobile_menu_btn_out" href="#login_block">Личный кабинет</a></li>
+            {% endif %}
+            <li><a href="/faq/">Поддержка</a></li>
+            <li><a href="/articles/">Статьи</a></li>
+            <li><a href="/">О проекте</a></li>
+        </ul>
+    </nav>
+</div>

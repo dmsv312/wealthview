@@ -1,0 +1,70 @@
+{% extends "wrapper.html" %}
+{% load static %}
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+    <script src="{% static "base/js/switch_all_page.js" %}"></script>
+    <script src="{% static "articles/filter_articles.js" %}"></script>
+    <script src="{% static "articles/search_form.js" %}"></script>
+    {% include 'includes/init_csrf_token.html' %}
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Статьи</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+    <div class="all_title_block">
+        <h1>Статьи</h1>
+    </div>
+    <div class="breadcrumbs_block">
+        <div class="container">
+            <div class="breadcrumbs_line">
+                <a href="{% url 'main-page' %}">Главная</a>
+                <a href="{% url 'articles-page' %}">Статьи</a>
+                <a href="{% url 'category-page' filter_category.slug %}">{{ filter_category.title }}</a>
+            </div>
+        </div>
+    </div>
+    <div class="main_content">
+        <div class="container">
+            <div class="common_art_block">
+                {% include "articles/includes/category-select.html" %}
+                <div class="left_cat_sidebar">
+                    <div>
+                        {% include "articles/includes/category_nav.html" %}
+                    </div>
+                </div>
+                <div class="right_content_sidebar">
+                    {% if articles_data %}
+                        <div id="articles_block">
+                            {% for article in articles_data %}
+                            <div class="article">
+                                <div class="thumbnail">
+                                    <img src="{{ article.thumbnail.url }}" alt="">
+                                    <span>{{ article.date|date:"d E Y" }}</span>
+                                </div>
+                                <div class="article_content">
+                                    <span>«{{ article.title }}»</span>
+                                    <img src="{% static 'base/img/art_img_hr.svg' %}" alt="">
+                                    <div class="article_text">
+                                        {{ article.description }}
+                                    </div>
+                                </div>
+                                <a href="/articles/{{ article.category.slug }}/{{ article.slug }}" class="blue_btn">Читать статью</a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <h2 class="info_header">Статей не найдено.</h2>
+                    {% endif %}
+                </div> 
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    <div id="overlay" class="simple_page"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+    <script src="{% static "lazy_pagination/page_lazy_load.js" %}"></script>
+{% endblock %}

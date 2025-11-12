@@ -1,0 +1,126 @@
+.sidebar_item {
+    width: 100%;
+}
+
+.sidebar_item > .sidebar_item_title div {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+}
+
+.sidebar_item img {
+    margin-right: 15px;
+}
+
+.sidebar_item span {
+    font-family: "OpenSans-Regular", sans-serif;
+    font-size: 14px;
+}
+
+.sidebar_item > .sidebar_item_title {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 15px 25px;
+    border-left: 2px solid transparent;
+    position: relative;
+    z-index: 2;
+}
+
+.sidebar_item > .sidebar_item_title:hover,
+.sidebar_item > .sidebar_item_title.active {
+    background: #1d2130;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.5);
+    border-left: 2px solid #495df3;
+}
+
+.sub_sidebar_item {
+    padding: 0px 25px;
+    background: #1d2130;
+    margin-top: 0;
+    display: none;
+    padding-top: 5px;
+}
+
+.sub_sidebar_item.show {
+    display: block;
+}
+
+.add_bt_line {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0px;
+    font-family: "OpenSans-Regular", sans-serif;
+    font-size: 13px;
+}
+
+.add_bt_line img {
+    margin-right: 10px;
+}
+
+.sidebar_hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background: #6c6e78;
+    margin: 0;
+}
+
+.sidebar_nav_item {
+    color: black;
+    width: 100%;
+}
+
+.sidebar_item_active {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.sidebar_nav_item_active {
+    color: black;
+    width: 100%;
+}
+
+.sidebar_item_title.active .rotate {
+    margin-right: 0;
+    transform: rotate(-180deg);
+}
+
+.sidebar_item_title .rotate {
+    margin-right: 0;
+    transform: rotate(0deg);
+}
+
+.sidebar_item_title.show {
+    background: #1d2130;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.5);
+    border-left: 2px solid #495df3;
+}
+
+.left_sidebar .sidebar_item .sidebar_item_title {
+    position: relative;
+    padding-left: 70px;
+}
+
+.left_sidebar .sidebar_item .sidebar_item_title > div > img {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translate(0, -50%);
+    max-width: 18px;
+}

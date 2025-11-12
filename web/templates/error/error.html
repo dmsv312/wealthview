@@ -1,0 +1,63 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Wealth View</title>
+{% endblock %}
+
+{% block content %}
+    <div class="top_title_block av-promo" style="height: calc(100vh - 150px); background-image: url({% static 'base/img/main_block_title1.png' %})">
+        <div class="container">
+            <div class="main_title_block">
+                <h1>Что-то пошло не так!</h1>
+                <p>Пожалуйста сообщите нам об ошибке</p>
+            </div>
+        </div>
+    </div>
+        <a id="feedback_button" style="border: 0px; width: 40px; height: 40px; padding: 0px; z-index: 1000; cursor: pointer!important;" class="feedback_btn start_test"><img id="feedback_img" style="width: 100%; " src="{% static 'base/img/message.png' %}"/></a>
+    <div id="feedback_menu" class="feedback_div" style="display: inline-block; text-align: center; z-index: 1000; visibility: visible;">
+        <p style="font-weight: bold;" >Написать в мессенджер</p>
+        <div style="width: 45%; display: inline-block;" >
+            <a id="telegram_img" href="https://t.me/WealthView" style="border: 0px; width: 40px; height: 40px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/telegram.png' %}"/></a>
+            <label style="display: block; font-size: 10px; padding-top: 5px;">Telegram</label>
+        </div>
+        <div style="width: 45%; display: inline-block;" >
+            <a id="whatsapp_img" href="https://wa.me/79213587389" style="border: 0px; width: 40px; height: 40px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/wa.png' %}"/></a>
+            <label style="display: block; font-size: 10px; padding-top: 5px;">WhatsApp</label>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block additional %}
+    <script type="text/javascript">
+            var active = false;
+            var feedback_button = document.getElementById("feedback_button");
+            var feedback_menu = document.getElementById("feedback_menu");
+            var feedback_img = document.getElementById("feedback_img");
+            var telegram_img = document.getElementById("telegram_img");
+            var whatsapp_img = document.getElementById("whatsapp_img");
+
+            feedback_menu.style.visibility = "hidden";
+
+            feedback_butt   on.addEventListener("click", function(){
+                if (active == false) {
+                    telegram_img.style.display = "";
+                    whatsapp_img.style.display = "";
+                    active = true;
+                    feedback_menu.style.visibility = "visible";
+                    feedback_img.src = "{% static 'base/img/message_close.png' %}";
+                }
+                else {
+                    telegram_img.style.display = "none";
+                    whatsapp_img.style.display = "none";
+                    active = false;
+                    feedback_menu.style.visibility = "hidden";
+                    feedback_img.src = "{% static 'base/img/message.png' %}";
+                }
+            });
+        </script>
+    <div id="overlay" class="simple_page"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% load static %}
+{% load account %}
+<div id="risk_profile_modal" style="text-align: center; display: none" class="modal_block change_password add_portfolio">
+    <div class="modal_title">
+        Новая версия риск-профиля
+        <div></div>
+    </div>
+    <div class="modal_content">
+        <p style="font-size: 13px;">Мы обновили риск-профиль. Пройдите заново риск-профиль для актуальной информации по Вашему портфелю</p>
+        <a href="{% url 'risk_profile' %}" class="blue_btn">Риск-профиль</a>
+    </div>
+    <img src="{% static 'base/img/close.svg' %}" alt="" class="modal_close close_btn">
+</div>

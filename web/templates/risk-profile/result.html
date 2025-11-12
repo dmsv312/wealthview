@@ -1,0 +1,248 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+    <script type="text/javascript" src="{% static 'base/js/date.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static "autocomplete/css/styles.css" %}">
+    <script type="text/javascript" src="{% static 'autocomplete/js/jquery.autocomplete.min.js' %}"></script>
+    {% include 'includes/init_csrf_token.html' %}
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Результат | Риск-профилирование</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+  <!-- Прелоадер -->
+    {% include "backtest/input_data/includes/loader.html" %}
+    <div class="container">
+        <div class="bag_nav_line">
+            {% include 'risk-profile/includes/risk-profile_text_line.html' %}
+            <div class="circle_line save_rezult_circle_line">
+                <i class="fas fa-circle "></i>
+                <i class="fas fa-circle "></i>
+                <i class="fas fa-circle "></i>
+                <hr>
+            </div>
+        </div>
+        <div class="content_block bag">
+            <div class="sd_block">
+                <div class="sd_form_block">
+
+                    <div class="about_line" style="margin: 0px 0px;">
+                    <div>
+                        <svg style="width: 360px; height: 360px;"viewbox="0 0 360 360">
+                            <linearGradient id="linear-gradient">
+                            <stop offset="0%" stop-color="blue"/>
+                          <stop offset="100%" stop-color="red"/>
+                        </linearGradient>
+                      
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="#ccc"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-533.8" />
+                                    
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="#ccc"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-644.75" />
+                                    
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="#ccc"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-755.7" />
+                                    
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="#ccc"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-866.65" />
+                                    
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="#ccc"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-977.6" />
+                      
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="url(#linear-gradient)"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-533.8" />
+                                    
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="url(#linear-gradient)"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-644.75" />
+                                    
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="url(#linear-gradient)"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-755.7" />
+                                    
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="url(#linear-gradient)"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-866.65" />
+                                    
+                                    <circle r="170" cx="180" cy="180" fill="none" stroke-width="8" stroke="url(#linear-gradient)"
+                                    stroke-linecap="round" stroke-dasharray="90 1067.6"
+                                    stroke-dashoffset="-977.6" />
+                                    
+                            <text x="180" y="125" font-family="Open Sans" font-size="55px"
+                                  text-anchor="middle" fill="#F1F2F4">
+                              2,5
+                            </text>
+                            <text x="180" y="180" font-family="Open Sans" font-size="22px" font-weight="normal"
+                            font-style="normal" text-anchor="middle" fill="#F1F2F4">
+                            Умеренно-агрессивный
+                            </text>
+                          </svg>
+                    </div>
+                    <div>
+                            <svg width="12" height="260" viewBox="0 0 12 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g filter="url(#filter1_d)">
+                            <rect x="5" y="251" width="250" height="2" rx="1" transform="rotate(-90 5 251)" fill="url(#paint0_radial)"/>
+                            </g>
+                            <defs>
+                            <filter id="filter1_d" x="0" y="0" width="12" height="260" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+                            <feOffset dy="4"/>
+                            <feGaussianBlur stdDeviation="2.5"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"/>
+                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                            </filter>
+                            <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(130 252) rotate(90) scale(1 125)">
+                            <stop stop-color="#5266FF"/>
+                            <stop offset="1" stop-color="#495DF3" stop-opacity="0"/>
+                            </radialGradient>
+                            </defs>
+                            </svg>
+
+                    </div>
+                    <div>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod 
+                            tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, 
+                            quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+                            Duis autem vel eum iriure dolor in hendrerit</p>
+                    </div>
+
+                </div>
+                    <div class="save_rez_line">
+
+                        <a href="#" class="blue_btn promo_register_btn">Больше возможностей</a>
+<!--                        <div class="probe_div">-->
+
+<!--                        </div>-->
+                        <svg width="461" height="265" viewBox="0 0 461 265" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                              <style>
+                                .small { font: italic 13px sans-serif; }
+                                .heavy { font: bold 30px sans-serif; }
+                                .Rrrrr { font: 40px serif; fill: white; }
+                              </style>
+                            <g filter="url(#filter0_d)">
+                            <path d="M402.311 40C301.141 40 159.674 40 58.5044 40C48.327 40 40 48.7244 40 59.3876V205.612C40 216.276 48.327 225 58.5044 225H130.302C130.302 218.602 135.853 214.936 140.294 214.936H320.706C325.147 214.936 330.698 218.602 330.698 225H402.496C412.673 225 421 216.276 421 205.612V59.3876C420.815 48.7244 412.488 40 402.311 40Z" fill="#343B59"/>
+                            <path d="M58.5044 40.5H59.0977H59.6919H60.2869H60.8829H61.4798H62.0777H62.6764H63.276H63.8765H64.4779H65.0802H65.6833H66.2874H66.8923H67.4981H68.1047H68.7122H69.3206H69.9299H70.5399H71.1509H71.7627H72.3753H72.9888H73.6031H74.2182H74.8342H75.451H76.0686H76.687H77.3063H77.9263H78.5472H79.1689H79.7914H80.4146H81.0387H81.6635H82.2892H82.9156H83.5428H84.1707H84.7995H85.429H86.0592H86.6903H87.322H87.9546H88.5879H89.2219H89.8567H90.4922H91.1284H91.7654H92.4031H93.0416H93.6807H94.3206H94.9612H95.6025H96.2445H96.8872H97.5306H98.1747H98.8194H99.4649H100.111H100.758H101.405H102.054H102.702H103.352H104.002H104.653H105.305H105.957H106.61H107.263H107.917H108.572H109.227H109.883H110.54H111.197H111.855H112.513H113.172H113.832H114.492H115.153H115.815H116.477H117.14H117.803H118.467H119.131H119.796H120.462H121.128H121.795H122.462H123.13H123.798H124.467H125.137H125.807H126.477H127.149H127.82H128.492H129.165H129.838H130.512H131.186H131.861H132.536H133.212H133.889H134.565H135.243H135.92H136.599H137.277H137.957H138.636H139.316H139.997H140.678H141.36H142.042H142.724H143.407H144.091H144.774H145.459H146.143H146.828H147.514H148.2H148.886H149.573H150.26H150.948H151.636H152.325H153.013H153.703H154.392H155.082H155.773H156.464H157.155H157.846H158.538H159.23H159.923H160.616H161.31H162.003H162.697H163.392H164.086H164.782H165.477H166.173H166.869H167.565H168.262H168.959H169.656H170.354H171.052H171.75H172.449H173.148H173.847H174.547H175.246H175.946H176.647H177.347H178.048H178.749H179.451H180.152H180.854H181.556H182.259H182.961H183.664H184.367H185.071H185.774H186.478H187.182H187.886H188.591H189.295H190H190.705H191.411H192.116H192.822H193.528H194.234H194.94H195.647H196.353H197.06H197.767H198.474H199.181H199.889H200.596H201.304H202.012H202.72H203.428H204.137H204.845H205.554H206.262H206.971H207.68H208.389H209.098H209.808H210.517H211.226H211.936H212.646H213.355H214.065H214.775H215.485H216.195H216.905H217.616H218.326H219.036H219.747H220.457H221.168H221.878H222.589H223.3H224.01H224.721H225.432H226.143H226.853H227.564H228.275H228.986H229.697H230.407H231.118H231.829H232.54H233.251H233.962H234.672H235.383H236.094H236.805H237.515H238.226H238.937H239.647H240.358H241.068H241.779H242.489H243.199H243.909H244.62H245.33H246.04H246.75H247.46H248.169H248.879H249.589H250.298H251.007H251.717H252.426H253.135H253.844H254.553H255.261H255.97H256.678H257.387H258.095H258.803H259.511H260.219H260.926H261.634H262.341H263.048H263.755H264.462H265.168H265.875H266.581H267.287H267.993H268.699H269.404H270.109H270.815H271.519H272.224H272.929H273.633H274.337H275.041H275.744H276.448H277.151H277.854H278.556H279.259H279.961H280.663H281.364H282.066H282.767H283.468H284.168H284.869H285.569H286.268H286.968H287.667H288.366H289.065H289.763H290.461H291.158H291.856H292.553H293.25H293.946H294.642H295.338H296.033H296.728H297.423H298.118H298.812H299.505H300.199H300.892H301.584H302.277H302.969H303.66H304.351H305.042H305.733H306.423H307.112H307.802H308.49H309.179H309.867H310.555H311.242H311.929H312.615H313.301H313.987H314.672H315.356H316.041H316.724H317.408H318.091H318.773H319.455H320.137H320.818H321.498H322.179H322.858H323.538H324.216H324.895H325.572H326.25H326.926H327.603H328.279H328.954H329.629H330.303H330.977H331.65H332.323H332.995H333.666H334.338H335.008H335.678H336.348H337.017H337.685H338.353H339.02H339.687H340.353H341.019H341.684H342.348H343.012H343.675H344.338H345H345.662H346.322H346.983H347.642H348.302H348.96H349.618H350.275H350.932H351.588H352.243H352.898H353.552H354.205H354.858H355.51H356.162H356.813H357.463H358.112H358.761H359.41H360.057H360.704H361.35H361.996H362.64H363.284H363.928H364.57H365.212H365.854H366.494H367.134H367.773H368.412H369.05H369.686H370.323H370.958H371.593H372.227H372.86H373.493H374.125H374.756H375.386H376.015H376.644H377.272H377.899H378.526H379.151H379.776H380.4H381.024H381.646H382.268H382.889H383.509H384.128H384.746H385.364H385.981H386.597H387.212H387.826H388.44H389.052H389.664H390.275H390.885H391.494H392.103H392.71H393.317H393.923H394.528H395.132H395.735H396.337H396.938H397.539H398.139H398.737H399.335H399.932H400.528H401.123H401.717H402.311C412.188 40.5 420.317 48.9768 420.5 59.3927V205.612C420.5 216.022 412.375 224.5 402.496 224.5H331.188C330.907 218.08 325.247 214.436 320.706 214.436H140.294C135.753 214.436 130.093 218.08 129.812 224.5H58.5044C48.6248 224.5 40.5 216.022 40.5 205.612V59.3876C40.5 48.9783 48.6248 40.5 58.5044 40.5Z" stroke="#7584FF" stroke-opacity="0.2"/>
+                            </g>
+                            <defs>
+                            <filter id="filter0_d" x="0" y="0" width="461" height="265" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+                            <feOffset/>
+                            <feGaussianBlur stdDeviation="20"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0"/>
+                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                            </filter>
+                            </defs>
+                                <text x="100" y="200" class="Rrrrr">{{ testy }}</text>
+                                <image xlink:href="http://127.0.0.1:8000/media/media/img/circle.png" x="200" y="100" height="25" width="25" />
+                        </svg>
+
+                        <svg width="128" height="4" viewBox="0 0 128 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.405762" width="127.582" height="3.00193" rx="1.50096" fill="url(#paint0_radial)"/>
+                        <defs>
+                        <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(64.1968 1.50096) rotate(90) scale(1.50096 63.791)">
+                        <stop stop-color="#69B3FB"/>
+                        <stop offset="1" stop-color="#69B3FB" stop-opacity="0"/>
+                        </radialGradient>
+                        </defs>
+                        </svg>
+                    </div>
+
+
+                    <div class="sываd_title_block sd_title_block_bottom">
+                        <span><p>• Вы можете использовать в качестве активов: акции и ETF, торгующиеся на NYSE, NASDAQ и
+                        Московской бирже. </p></span>
+                        <span><p>• По активам доходность считается с учетом дивидендов (total return).</p></span>
+                        <span><p>• Бэк-тест не учитывает леверидж (позиции «на плечо» и короткие позиции). </p></span>
+                        <span><p>• Сумма долей активов должна быть равна 100%.</p></span>
+                        <span><p>• Установленный период может быть уменьшен, если он больше периода существования любого из активов</p></span>
+                    </div>
+
+                    <div class="in_shad in_shad_pad graph_price bag_block">
+                        <figure class="highcharts-figure">
+                            <div id="cash_by_asset_ticker" data-highcharts-chart="1" style="overflow: hidden;" role="region" aria-label="Распределение по активам. Highcharts interactive chart." aria-hidden="false">
+                                <div id="highcharts-screen-reader-region-before-1" aria-label="Chart screen reader information." role="region" aria-hidden="false" style="position: relative;">
+                                    <div aria-hidden="false" style="position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0.01;">
+                                        <h5>Распределение по активам</h5>
+                                        <div>Pie chart with 2 slices.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div aria-hidden="false" aria-live="polite" style="position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0.01;"></div>
+                                <div id="highcharts-m4werg2-870" dir="ltr" class="highcharts-container " style="position: relative; overflow: hidden; width: 381px; height: 400px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); font-family: OpenSans-Light, sans-serif;" tabindex="0" aria-hidden="false">
+                                    <svg version="1.1" class="highcharts-root" style="font-family:OpenSans-Light, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="381" height="400" viewBox="0 0 381 400" aria-label="Interactive chart" aria-hidden="false">
+                                        <desc aria-hidden="true">Created with Highcharts 8.0.0</desc>
+                                        <defs aria-hidden="true">
+                                            <clipPath id="highcharts-m4werg2-873-">
+                                                <rect x="0" y="0" width="361" height="345" fill="none"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <rect fill="#22273A" class="highcharts-background" x="0" y="0" width="381" height="400" rx="0" ry="0" aria-hidden="true"></rect>
+                                        <rect fill="#22273A" class="highcharts-plot-background" x="10" y="40" width="361" height="345" aria-hidden="true"></rect>
+                                        <rect fill="none" class="highcharts-plot-border" data-z-index="1" x="10" y="40" width="361" height="345" aria-hidden="true"></rect>
+                                        <g class="highcharts-series-group" data-z-index="3" aria-hidden="false">
+                                            <g data-z-index="0.1" class="highcharts-series highcharts-series-0 highcharts-pie-series highcharts-tracker" transform="translate(10,40) scale(1 1)" style="cursor:pointer;" aria-hidden="false" aria-label="">
+                                            <path fill="rgb(3,157,208)" d="M 181.96965269264942 23.50000309046669 A 149 149 0 1 1 94.55444066994495 293.14109645329745 L 95.14132361846882 292.33142466502034 A 148 148 0 1 0 181.9698563658531 24.500003069725295 Z" class="highcharts-halo highcharts-color-0" data-z-index="-1" fill-opacity="0.25" visibility="hidden"></path>
+                                            <path fill="rgb(3,157,208)" d="M 181.96965269264942 23.50000309046669 A 149 149 0 1 1 94.55444066994495 293.14109645329745 L 182 172.5 A 0 0 0 1 0 182 172.5 Z" transform="translate(0,0)" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-0" tabindex="-1" role="img" aria-label="1. AAPL, 60%."></path>
+                                            <path fill="rgb(8,162,213)" d="M 94.43384331637455 293.0535905879985 A 149 149 0 0 1 181.79304198922733 23.500143730331814 L 182 172.5 A 0 0 0 0 0 182 172.5 Z" transform="translate(0,0)" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-1" tabindex="-1" role="img" aria-label="2. OSUR, 40%."></path>
+                                            </g>
+                                            <g data-z-index="0.1" class="highcharts-markers highcharts-series-0 highcharts-pie-series" transform="translate(10,40) scale(1 1)" aria-hidden="true"></g>
+                                        </g>
+                                        <text x="191" text-anchor="middle" class="highcharts-title" data-z-index="4" style="color:#ffffff;font-size:13px;text-transform:uppercase;font-family:OpenSans-Semibold, sans-serif;text-align:center;fill:#ffffff;" y="20" aria-hidden="true">
+                                            <tspan>Распределение по активам</tspan></text><text x="191" text-anchor="middle" class="highcharts-subtitle" data-z-index="4" style="color:#666666;fill:#666666;" y="39" aria-hidden="true">
+                                        </text>
+                                        <text x="10" text-anchor="start" class="highcharts-caption" data-z-index="4" style="color:#666666;fill:#666666;" y="397" aria-hidden="true"></text>
+                                        <g data-z-index="6" class="highcharts-data-labels highcharts-series-0 highcharts-pie-series highcharts-tracker" transform="translate(10,40) scale(1 1)" opacity="1" style="cursor:pointer;" aria-hidden="true">
+                                            <g class="highcharts-label highcharts-data-label highcharts-data-label-color-0" data-z-index="1" transform="translate(293,205)" opacity="1">
+                                                <text x="5" data-z-index="1" style="font-size:12px;font-weight:normal;font-family:OpenSans-Regular, sans-serif;color:#ffffff;cursor:pointer;fill:#ffffff;" y="17">AAPL</text>
+                                            </g>
+                                            <g class="highcharts-label highcharts-data-label highcharts-data-label-color-1" data-z-index="1" transform="translate(27,120)" opacity="1">
+                                                <text x="5" data-z-index="1" style="font-size:12px;font-weight:normal;font-family:OpenSans-Regular, sans-serif;color:#ffffff;cursor:pointer;fill:#ffffff;" y="17">OSUR</text>
+                                            </g>
+                                        </g>
+                                        <g class="highcharts-legend" data-z-index="7" aria-hidden="true">
+                                            <rect fill="none" class="highcharts-legend-box" rx="0" ry="0" x="0" y="0" width="8" height="8" visibility="hidden"></rect>
+                                            <g data-z-index="1">
+                                                <g>
+
+                                                </g>
+                                            </g>
+                                        </g>
+                                        <text x="371" class="highcharts-credits" text-anchor="end" data-z-index="8" style="cursor:pointer;color:#999999;font-size:9px;fill:#999999;" y="395" aria-label="Chart credits: Highcharts.com" aria-hidden="false">Highcharts.com</text>
+                                        <g class="highcharts-label highcharts-tooltip      highcharts-color-0" style="pointer-events:none;white-space:nowrap;" data-z-index="8" transform="translate(102,-9999)" opacity="0" visibility="visible" aria-hidden="true"><path fill="none" class="highcharts-label-box highcharts-tooltip-box highcharts-shadow" d="M 3.5 0.5 L 48.5 0.5 C 51.5 0.5 51.5 0.5 51.5 3.5 L 51.5 43.5 C 51.5 46.5 51.5 46.5 48.5 46.5 L 3.5 46.5 C 0.5 46.5 0.5 46.5 0.5 43.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" stroke="#000000" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></path><path fill="none" class="highcharts-label-box highcharts-tooltip-box highcharts-shadow" d="M 3.5 0.5 L 48.5 0.5 C 51.5 0.5 51.5 0.5 51.5 3.5 L 51.5 43.5 C 51.5 46.5 51.5 46.5 48.5 46.5 L 3.5 46.5 C 0.5 46.5 0.5 46.5 0.5 43.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" stroke="#000000" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></path><path fill="none" class="highcharts-label-box highcharts-tooltip-box highcharts-shadow" d="M 3.5 0.5 L 48.5 0.5 C 51.5 0.5 51.5 0.5 51.5 3.5 L 51.5 43.5 C 51.5 46.5 51.5 46.5 48.5 46.5 L 3.5 46.5 C 0.5 46.5 0.5 46.5 0.5 43.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" stroke="#000000" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></path><path fill="rgba(247,247,247,0.85)" class="highcharts-label-box highcharts-tooltip-box" d="M 3.5 0.5 L 48.5 0.5 C 51.5 0.5 51.5 0.5 51.5 3.5 L 51.5 43.5 C 51.5 46.5 51.5 46.5 48.5 46.5 L 3.5 46.5 C 0.5 46.5 0.5 46.5 0.5 43.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" stroke="rgb(3,157,208)" stroke-width="1"></path><text x="8" data-z-index="1" style="font-size:12px;color:#333333;cursor:default;fill:#333333;" y="20"><tspan style="font-size: 10px">AAPL</tspan><tspan style="font-weight:bold" x="8" dy="15">60.0%</tspan></text></g></svg></div><div id="highcharts-screen-reader-region-after-1" aria-label="" aria-hidden="false" style="position: relative;"><div aria-hidden="false" style="position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0.01;"><div id="highcharts-end-of-chart-marker-1" class="highcharts-exit-anchor" tabindex="0" aria-hidden="false">End of interactive chart.</div></div></div></div>
+                        </figure>
+                    </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    <div id="overlay"></div>
+    {% include "includes/modal_mobile_horiz.html" %}
+    {% include "backtest/input_data/includes/modal_add_active.html" %}
+        {% include "auth_sys/includes/mobile_menu.html" %}
+    {% include "auth_sys/includes/auth_modal.html" %}
+    <script type="text/javascript" src="{% static 'backtest/input_data/loader.js' %}"></script>
+    <script type="text/javascript" src="{% static "utils/forms.js" %}"></script>
+    <script type="text/javascript" src="{% static "utils/validate.js" %}"></script>
+    <script type="text/javascript" src="{% static 'autocomplete/js/autocomplete.js' %}"></script>
+{% endblock %}
+        {% block charts_js%}
+    {% include 'backtest/analyze/includes/charts.html' %}
+{% endblock %}
+

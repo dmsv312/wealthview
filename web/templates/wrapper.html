@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru"
+    xmlns:og="//ogp.me/ns#"
+    xmlns:fb="//ogp.me/ns/fb#">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if IS_PRODUCTION %}
+        <meta name="yandex-verification" content="bedc8593a9233bab" />
+        {% include "includes/google-tag-manager.html" %}
+        {% include "includes/yandex-metrika.html" %}
+    {% endif %}
+    <!------------------- PAGE TITLE --------------->
+    {% block title %}
+        <title> Wealth View...</title>
+    {% endblock %}
+    <!------------------- INIT STYLES -------------->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'base/img/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'base/img/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'base/img/favicon/favicon-16x16.png' %}">
+    <link rel="stylesheet" href="{% static "base/css/main.min.css" %}" type="text/css">
+    <!--<link rel="stylesheet" href="{% static "base/css/main.css" %}" type="text/css">-->
+    <!------------------- INIT SCRIPTS ------------->
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
+            integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+    <script src="{% static "base/js/tooltipster/tooltipster.bundle.js" %}"></script>
+    <script src="{% static "base/js/magnific/jquery.magnific-popup.js" %}"></script>
+    <script src="{% static "base/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "base/js/common.js" %}"></script>
+    <script src="{% static "auth_sys/modal_auth.js" %}"></script>
+    <!------------------- EXTRA SCRIPTS ------------>
+
+    {% block extra_import %}
+    {% endblock %}
+
+    {% block extra_style %}
+    {% endblock %}
+
+    <script src="{% static "highcharts9/highstock.js" %}"></script>
+    <script src="{% static "highcharts9/modules/accessibility.js" %}"></script>
+    <script src="{% static "highcharts9/modules/data.js" %}"></script>
+    <script src="{% static "highcharts9/modules/exporting.js" %}"></script>
+    <script src="{% static "highcharts9/modules/boost.js" %}"></script>
+</head>
+
+<body class="all">
+<!------------------- HEADER ------------------->
+{% block header %}
+    {% include "includes/header.html" %}
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+{% endblock %}
+{% block charts_js %}
+{% endblock %}
+<!------------------- FOOTER ------------------->
+{% block footer %}
+    {% include "includes/footer.html" %}
+{% endblock %}
+
+</body>
+</html>

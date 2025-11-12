@@ -1,0 +1,26 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Wealth View</title>
+{% endblock %}
+
+{% block content %}
+    <div class="top_title_block av-promo" style="height: calc(100vh - 150px); background-image: url({% static 'base/img/main_block_title1.png' %})">
+        <div class="container">
+            <div class="main_title_block">
+                <h1>Что-то пошло не так!</h1>
+                <p>Пожалуйста сообщите нам об ошибке</p>
+                <a href="" class="blue_btn">Отправить сообщение</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block additional %}
+    <div id="overlay" class="simple_page"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+{% endblock %}
+
+

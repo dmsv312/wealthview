@@ -1,0 +1,13 @@
+{% load static %}
+<div class="selectBox">
+    <img src="{% static 'base/img/arrow_1_black.png' %}" alt="" width="15px" class="arrow">
+    <p id="main_sort_selector" class="valueTag" name="select">Сортировать по</p>
+    <ul class="selectMenuBox">
+        <li><a id="sort_selector_date" class="option" href="{% url 'reviews-page' %}?order_by=date">Дате отзыва ▲</a></li>
+        <li><a id="sort_selector_-date" class="option" href="{% url 'reviews-page' %}?order_by=-date">Дате отзыва ▼</a></li>
+        <li><a id="sort_selector_rating" class="option" href="{% url 'reviews-page' %}?order_by=rating">Рейтингу ▲</a></li>
+        <li><a id="sort_selector_-rating" class="option" href="{% url 'reviews-page' %}?order_by=-rating">Рейтингу ▼</a></li>
+        <li><a id="sort_selector_popularity" class="option" href="{% url 'reviews-page' %}?order_by=popularity">Популярности ▲</a></li>
+        <li><a id="sort_selector_-popularity" class="option" href="{% url 'reviews-page' %}?order_by=-popularity">Популярности ▼</a></li>
+    </ul>
+</div>

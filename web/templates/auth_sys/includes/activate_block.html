@@ -1,0 +1,41 @@
+{% load static %}
+
+<div id="activate_block" class="mfp-hide b-modal-default b-modal-activate">
+    <div class="login_block_title">
+        Авторизация
+        <button type="button" class="mfp-close"></button>
+    </div>
+    {% if user_active and process == 'activate' %}
+       <div class="login_form_block">
+            <form class="login_form">
+                <label>Спасибо за регистрацию. Войдите на сайт </label>
+                <div class="activate_href"><a class="js-modal" href="#login_block">Войти</a></div>
+            </form>
+       </div>
+</div>
+    {% endif %}
+    {% if not user_active and process == 'activate' %}
+    <div class="login_form_block">
+        <form class="login_form">
+            <label>Спасибо за регистрацию.</label>
+            <label>На вашу почту отправлена ссылка для активации аккаунта.</label>
+        </form>
+    </div>
+    {% endif %}
+    {% if process == 'change_settings_success' %}
+    <div class="login_form_block">
+        <form class="login_form">
+            <label>Вы изменили пароль. Войдите на сайт </label>
+            <div class="activate_href"><a class="js-modal" href="#login_block">Войти</a></div>
+        </form>
+    </div>
+    {% endif %}
+    {% if process == 'forget_password' %}
+    <div class="login_form_block">
+        <form class="login_form">
+            <label>На Вашу почту отправлена ссылка для восстановления пароля.</label>
+            <label>Перейдите по ссылке в письме и введите новый пароль.</label>
+        </form>
+    </div>
+    {% endif %}
+</div>

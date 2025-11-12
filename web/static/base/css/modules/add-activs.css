@@ -1,0 +1,30 @@
+.add_activs {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    border: 1px solid #686c7a;
+    width: max-content;
+    height: 40px;
+}
+
+.add_activs span {
+    font-family: "OpenSans-Regular", sans-serif;
+    font-size: 13px;
+    padding: 11px 17px;
+    text-align: center;
+    border-right: 1px solid #686c7a;
+}
+
+.add_activs img {
+    padding: 12px 17px;
+}
+
+@media (max-width: 767px) {
+    .add_activs span {
+        padding: 11px 39px;
+    }
+}

@@ -1,0 +1,55 @@
+{% load backtest %}
+<style>
+    {% if  portfolio_analysis_data.stats_param.sharp %}
+        .gb_line.sharp:before, .gb_line.sharp:after {
+            left: {% convert_scale portfolio_analysis_data.stats_param.sharp.value_portfolio %}%
+        }
+    {% endif %}
+
+    {% if  portfolio_analysis_data.stats_param.r_square %}
+        .gb_line.r_square:before, .gb_line.r_square:after {
+            left: {% convert_scale portfolio_analysis_data.stats_param.r_square.value_portfolio %}%
+        }
+    {% endif %}
+
+    {% if  portfolio_analysis_data.stats_param.beta %}
+        .gb_line.beta:before, .gb_line.beta:after {
+            left: {% convert_scale portfolio_analysis_data.stats_param.beta.value_portfolio %}%
+        }
+    {% endif %}
+
+    {% if  portfolio_analysis_data.stats_param.vol_ptf %}
+        .gb_line.vol_ptf:before, .gb_line.vol_ptf:after {
+            left: {% convert_scale portfolio_analysis_data.stats_param.vol_ptf.value_portfolio %}%
+        }
+    {% endif %}
+
+    {% if  portfolio_analysis_data.stats_param.vol_bench %}
+        .gb_line.vol_bench:before, .gb_line.vol_bench:after {
+            left: {% convert_scale portfolio_analysis_data.stats_param.vol_bench.value_portfolio %}%
+        }
+    {% endif %}
+
+    {% if  portfolio_analysis_data.stats_param.alpha %}
+        .gb_line.alpha:before, .gb_line.alpha:after {
+            left: {% convert_scale portfolio_analysis_data.stats_param.alpha.value_portfolio %}%
+        }
+    {% endif %}
+
+    {% if  portfolio_analysis_data.stats_param.var %}
+        .gb_line.var:before, .gb_line.var:after {
+            left: {% convert_scale portfolio_analysis_data.stats_param.var.value_portfolio %}%
+        }
+    {% endif %}
+
+    .gb_line.vol_ptf {
+    {% if   portfolio_analysis_data.stats_param.vol_ptf.value > portfolio_analysis_data.stats_param.vol_bench.value_portfolio %}
+        background: #f23730;
+
+    {% else %}
+        background: #20c893;
+    {% endif %}
+
+    }
+
+</style>

@@ -1,0 +1,31 @@
+{% load static %}
+<div id="modal_compare_asset" class="modal_add_active mfp-hide b-modal-ctn autocomplete_body">
+    <button type="button" class="mfp-close"></button>
+    <div class="modal_title">
+        выберите актив для сравнения
+    </div>
+    <div class="modal_content">
+        <div>
+            <span>тип</span>
+            <div class="selectBox">
+
+                <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+
+                <p class=valueTag name=select>Тип актива</p>
+                <ul id="select_assets" class="selectMenuBox">
+                </ul>
+            </div>
+        </div>
+        <div id="compare_error_div" class="input_search">
+            <span id="compare_error_span">имя</span>
+            <input id="compare_search_input" style="border: 1px solid #686c7a;" type="text" class="tags" data-type="assets" required>
+        </div>
+        <div id="compare_error_message" class="input_search" style="display: none;">
+            <span></span>
+            <label>Выберите актив для сравнения</label>
+        </div>
+        <div class="modal_submit">
+            <a id="modal_compare_button" href="#" class="blue_btn">Выбрать</a>
+        </div>
+    </div>
+</div>

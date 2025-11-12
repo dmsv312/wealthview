@@ -1,0 +1,123 @@
+{% extends "wrapper.html" %}
+{% load static %}
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+    <script src="{% static "base/js/switch_all_page.js" %}"></script>
+{#    <script src="{% static "js/filter_articles.js" %}"></script>#}
+    <meta property="og:title" content="{{ article.title }}"/>
+    <meta property="og:description" content="{{ article.description }}"/>
+    <meta id="og_image" property="og:image" content="{{ article.thumbnail.url }}"/>
+    <meta property="og:type" content="website"/>
+    <meta id="og_url" property="og:url" content="{% url 'category-page' article.category.slug %}" />
+    <script>
+        let og_url = document.getElementById("og_url");
+        og_url.setAttribute("content", window.location.origin.toString() + og_url.getAttribute("content"));
+        let og_image = document.getElementById("og_image");
+        og_image.setAttribute("content", window.location.origin.toString() + og_image.getAttribute("content"));
+    </script>
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>{{ article.title }} | Статья</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+    <!-- Прелоадер -->
+    {% include "backtest/input_data/includes/loader.html" %}
+    <div class="all_title_block">
+        <h1>Статьи</h1>
+    </div>
+    <div class="breadcrumbs_block">
+        <div class="container">
+            <a href="/articles/" class="article-link-back">
+                <img src="{% static 'base/img/icon-point-back.svg' %}" alt="">
+            </a>
+            <div class="breadcrumbs_line">
+                <a href="{% url 'main-page' %}">Главная</a>
+                <a href="{% url 'articles-page' %}">Статьи</a>
+                <a href="{% url 'category-page' article.category.slug %}">{{ article.category.title }}</a>
+            </div>
+        </div>
+    </div>
+    <div class="main_content">
+        <div class="container">
+            <div class="common_art_block">
+
+                <div class="left_cat_sidebar">
+                    {% include "articles/includes/category_nav.html" %}
+                </div>
+
+                <div class="right_content_sidebar">
+                    <div class="article s_article">
+                        <div class="thumbnail">
+                            <img src="{{ article.thumbnail.url }}" alt="">
+                        </div>
+                        <div class="article_content">
+                            <span>«{{ article.title }}»</span>
+                            <img src="{% static 'base/img/art_img_hr_s.png' %}" alt="">
+                            <div class="article_text">
+                                {{ article.content|safe|linebreaks}}
+                                {% comment %}
+                                    <div class="art_con_img_block">
+                                        <img src="{% static 'img/art_content_img_1.png' %}" alt="">
+                                    </div>
+                                    <div class="around_img">
+                                        <div class="art_con_img_block fl">
+                                            <img src="{% static 'img/art_content_img_2.png' %}" alt="">
+                                        </div>
+                                        <div>
+                                            <p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium
+                                                doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore
+                                                veritatis et quasi architecto beatae vitae dicta sunt, explicabo. nemo enim
+                                                ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia
+                                                consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque
+                                                porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur,
+                                                adipisci velit, sed quia non numquam eius modi tempora incidunt.
+                                            </p>
+                                            <p>Ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima.</p>
+                                        </div>
+                                    </div>{% endcomment %}
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="article__footer">
+                        <a href="/articles/" class="article-link-back">
+                            <img src="{% static 'base/img/icon-point-back.svg' %}" alt="">
+                        </a>
+                        <div class="date_publish">
+                            ДАТА ПУБЛИКАЦИИ: <span>{{ article.date|date:"d E Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="related_articles_block">
+                        <div class="category_title">
+                            Похожие статьи
+                        </div>
+                        <div class="related_line">
+                            {% for article in related_articles %}
+                                <div>
+                                    <div class="thumbnail">
+                                        <img src="{{ article.thumbnail.url }}" alt="">
+                                    </div>
+                                    <a href="{% url 'article-page' article.category.slug article.slug %}"><span>«{{ article.title }}»</span></a>
+                                    <div class="article_text">
+                                        <p>{{ article.content|striptags|safe|truncatechars:91 }}</p>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <h6>Пока что на сайте нет похожих статей.</h6>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    {% include "auth_sys/includes/mobile_menu.html" %}
+    <div id="overlay" class="simple_page"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+{% endblock %}

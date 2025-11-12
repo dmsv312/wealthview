@@ -1,0 +1,73 @@
+{% load static %}
+{% load account %}
+<div id="modal_change_portfolio" class="mfp-hide b-modal-ctn b-modal-ctn_sm">
+    <button type="button" class="mfp-close"></button>
+    <div class="modal_title">
+        Изменить портфель
+        <div></div>
+    </div>
+    <div class="modal_content">
+        <form id="change_portfolio_form" action="{% url 'my-account-portfolio-change-settings' %}"
+               onsubmit="return validate_change_portfolio()" method="get">
+            {% csrf_token %}
+            <div class="mo_line">
+
+                    <label style="padding-bottom: 10px;">Название портфеля</label>
+                    <input id="change_portfolio_name" type="text" name="portfolio_name" data-name="portfolio_name" autocomplete="off" required>
+
+            </div>
+
+            <p></p>
+
+            <div class="select_line change_portfolio" style="display: block; margin-bottom: 35px;">
+                <label style="padding-bottom: 10px;">Базовая валюта</label>
+                <div id="currency_selectBox" class="selectBox">
+
+                    <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+
+                    <p id="change_portfolio_currency_p" class=valueTag name=select>{{ currencies.0.ticker }}</p>
+
+                    <ul class="selectMenuBox">
+                        {% for currency in currencies %}
+                            <li class="option currency_option">{{ currency.ticker }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <input id="change_portfolio_currency_input" type="hidden" name="currency" value="{{ currencies.0.ticker }}">
+                </div>
+            </div>
+
+            <p></p>
+
+            <div class="select_line change_portfolio" style="display: block; margin-bottom: 35px;">
+                <label style="padding-bottom: 10px;">Бенчмарк</label>
+                <div id="benchmark_selectBox" class="selectBox" style="text-transform: none;">
+
+                    <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+
+                    <p id="change_portfolio_benchmark_p" class=valueTag name=select>{{ benchmarks.0.name }}</p>
+
+                    <ul class="selectMenuBox">
+                        {% for benchmark in benchmarks %}
+                            <li class="option benchmarks_data" data-pk="{{ benchmark.id }}">{{ benchmark.name }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <input id="change_portfolio_benchmark_input" type="hidden" name="benchmark" data-pk="{{ benchmarks.0.id }}" value={{ benchmarks.0.name }}>
+                </div>
+            </div>
+            <p></p>
+
+            <input id="change_portfolio_pk" style="display: none" name="portfolio_pk" data-name="portfolio_pk" type="text" value="sss">
+            <p></p>
+            <div class="group-button">
+                {% if request.user.profile.profile_portfolios.count == 1 %}
+                    <a href="#delete_portfolio_modal" id="delete_portfolio" style="cursor: pointer; background: #D752D8; opacity: 0.4;" class="blue_btn js-modal-inner" disabled="">Удалить <span>портфель</span></a>
+                {% else %}
+                    <a href="#delete_portfolio_modal" id="delete_portfolio" style="cursor: pointer; background: #D752D8;" class="blue_btn js-modal-inner">Удалить <span>портфель</span></a>
+                {% endif %}
+                <button id="change_portfolio_settings_btn" form="change_portfolio_form" style="width: 45%; border-radius: 25px; margin-left: 15px; padding-bottom: 12px; padding-top: 12px; text-transform: none;" type="submit" class="blue_btn">Применить</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="messages_block">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "success" %}
+                <div class="alert success">
+                    <span class="closebtn">&times;</span>
+                    {{ message }}
+                </div>
+            {% elif message.tags == "error" %}
+                <div class="alert">
+                    <span class="closebtn">&times;</span>
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

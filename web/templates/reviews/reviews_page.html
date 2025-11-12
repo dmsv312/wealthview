@@ -1,0 +1,93 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+    <link rel="stylesheet" href="{% static 'base/css/alert.css' %}">
+    <script src="{% static "base/js/switch_all_page.js" %}"></script>
+    <script src="{% static "reviews/type_selection.js" %}"></script>
+    <script src="{% static "reviews/comments.js" %}"></script>
+    {% include 'includes/init_csrf_token.html' %}
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Отзывы и предложения</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+    <div class="all_title_block">
+        <h1>Отзывы</h1>
+        <span>и предложения</span>
+    </div>
+    <div class="breadcrumbs_block">
+        <div class="container">
+            <div class="breadcrumbs_line">
+                <a href="{% url 'main-page' %}">Главная</a>
+                <a href="{% url 'reviews-page' %}?type=ID">Отзывы и предложения</a>
+            </div>
+        </div>
+    </div>
+    <div class="main_content">
+        <div class="container">
+            {% include 'includes/messages_block.html' %}
+            <div class="i_want_line block_shadow">
+                <a href="{% url 'reviews-page' %}" class="iw_line_href single_filter">
+                    <div>Всего</div>
+                    <div>{{ published_reviews_count }}</div>
+                </a>
+                {% for val, status, count in statuses %}
+                    <a href="{% url 'reviews-page' %}?status={{ val }}" class="iw_line_href single_filter"
+                       id="single_filter_{{ val }}">
+                        <div>{{ status|capfirst }}</div>
+                        <div>{{ count }}</div>
+                    </a>
+                {% endfor %}
+                <a href="#" data-is_auth="{{ request.user.is_authenticated }}"
+                   class="iw_line_href blue_btn">
+                    <div>Мне хотелось бы...</div>
+                    <!--- <div><img src="{% static 'base/img/lightbulb.png' %}" alt=""></div> ---->
+                    <div><i class="far fa-lightbulb"></i></div>
+                </a>
+            </div>
+            <div class="review_filter_line">
+                <div>
+                    <a href="{% url 'reviews-page' %}" class="blue_btn not_bg">Показать всё</a>
+                    <span>или</span>
+                    <a href="#" class="blue_btn filter_active">Включить фильтр</a>
+                </div>
+                <div>
+                    {% include "reviews/includes/sort_select_box.html" %}
+                </div>
+            </div>
+
+            {% if reviews_data %}
+                <div class="reviews_block">
+                    {% include "reviews/includes/reviews.html" %}
+                </div>
+            {% else %}
+                <h2 class="info_header">Отзывов не найдено.</h2>
+            {% endif %}
+
+            {% if has_next %}
+                <a id="lazyLoadLink" href="javascript:void(0);" class="more_articles"
+                   data-page="2" data-block=".reviews_block" data-url="{% url 'lazy_load_reviews' %}">
+                    показать еще
+                    <img src="{% static 'base/img/more_articles.svg' %}" alt="">
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    <div id="overlay"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+    {% include "reviews/includes/i_want_modal.html" %}
+    {% include "reviews/includes/filter_modal.html" %}
+    {% include "includes/modal_mobile_horiz.html" %}
+    <script src="{% static "lazy_pagination/page_lazy_load.js" %}"></script>
+    <script src="{% static "reviews/rate_instance.js" %}"></script>
+    <script src="{% static 'reviews/persist_states.js' %}"></script>
+    <script src="{% static "base/js/radio_box.js" %}"></script>
+    <script src="{% static "base/js/alert.js" %}"></script>
+{% endblock %}

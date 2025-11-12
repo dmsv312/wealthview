@@ -1,0 +1,62 @@
+{% load static %}
+<div>
+    <label>Активы</label>
+    <div class="assets_fields">
+        {% if analyze_data %}
+            {% for asset in analyze_data.assets %}
+                <div class="zoom_line custom">
+                    <input type="text" class="tags asset_input" name="asset" data-type="assets" data-filter="all" required
+                    value="{{ asset }}"/>
+                    <img src="{% static 'base/img/zoom.svg' %}" alt="" class="arrow search_asset">
+                    <img src="{% static 'base/img/close.svg' %}" alt="" class="arrow remove_asset">
+                </div>
+            {% endfor %}
+            {% for i in analyze_data.count_empty_field %}
+                {% include "backtest/input_data/includes/asset_field.html" %}
+            {% endfor %}
+        {% else %}
+            <div class="zoom_line custom">
+                <input type="text" class="tags asset_input" name="asset" data-type="assets" data-filter="all" required/>
+                <img src="{% static 'base/img/zoom.svg' %}" alt="" class="arrow search_asset">
+                <img src="{% static 'base/img/close.svg' %}" alt="" class="arrow remove_asset">
+            </div>
+            {% include "backtest/input_data/includes/asset_field.html" %}
+            {% include "backtest/input_data/includes/asset_field.html" %}
+            {% include "backtest/input_data/includes/asset_field.html" %}
+            {% include "backtest/input_data/includes/asset_field.html" %}
+        {% endif %}
+    </div>
+    <div class="sd_line_4 sd_line sd_line_flex">
+        <a href="#" class="add_activs" data-url="{% url 'add-asset' %}">
+            <span>Добавить</span>
+            <img src="{% static 'base/img/plus.svg' %}" alt="">
+        </a>
+        <label class="total_label total_label_form">Итого:</label>
+    </div>
+</div>
+<div>
+    <label>Доля (%)</label>
+    <div class="shares_fields">
+        {% if analyze_data %}
+            {% for share in analyze_data.shares %}
+                <div class="zoom_line share_field">
+                    <input type="number" class step="0.01" min="0.01" max="100" name="share"
+                           value="{{ share }}">
+                </div>
+            {% endfor %}
+            {% for i in analyze_data.count_empty_field %}
+                {% include "backtest/input_data/includes/share_field.html" %}
+            {% endfor %}
+        {% else %}
+            {% include 'backtest/input_data/includes/share_field.html' %}
+            {% include 'backtest/input_data/includes/share_field.html' %}
+            {% include 'backtest/input_data/includes/share_field.html' %}
+            {% include 'backtest/input_data/includes/share_field.html' %}
+            {% include 'backtest/input_data/includes/share_field.html' %}
+        {% endif %}
+    </div>
+
+    <div class="zoom_line">
+        <input id="total_share" type="number" value="0" class="readonly" max="100" min="100">
+    </div>
+</div>

@@ -1,0 +1,34 @@
+{% load static %}
+<div class="wrapper-footer-bottom">
+<header id="header" class="lk av-header">
+    <div class="header_line">
+        <div class="lc_left_header_block header_right_block">
+            <div class="header_hamburger">
+                 <img class="mobile_menu_btn js-modal-menu" data-mfp-src="#mobile_menu_block" src="{% static 'base/img/icon-hamb.svg' %}" alt="">
+                 <img class="mobile_menu_btn_close js-modal-menu-close" src="{% static 'base/img/icon-close.svg' %}" alt="">
+             </div>
+            <a href="{% url 'main-page' %}" id="logo">Wealth View</a>
+            {% include 'includes/header_nav.html' %}
+        </div>
+        <div class="header_right_block lc_header_right_block av-auth">
+            <div class="av-auth__icon js-av-auth-show">
+                <i class="fas fa-user"></i>
+                <img class="av-auth__close" src="{% static 'base/img/icon-close.svg' %}" alt="">
+            </div>
+            <div class="av-auth__menu">
+                <div class="av-auth__menu-wrap">
+                    <div class="av-auth__menu-text av-auth__menu-text_bold">
+                        {{ user.get_full_name }}
+                    </div>
+                    <div class="av-auth__menu-text av-auth__menu-text_bordered">
+                        {{ user.email }}
+                    </div>
+                    <div class="av-auth__menu-helper">Если Вы хотите изменить свои данные или пароль, то напишите нам:
+                        <br>
+                        <a>support@wealthview.ru</a></div>
+                    <a href="{% url 'logout' %}" id="logout_btn" class="av-auth__menu-logout blue_btn">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

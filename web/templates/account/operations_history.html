@@ -1,0 +1,27 @@
+<div class="history_block_scroll">
+    <div class="history_block">
+        <div class="history_line history_line_1 bg_dark">
+            <div class="ttu ossb">ДАТА</div>
+            <div class="ttu ossb">АКТИВ</div>
+            <div class="ttu ossb">ТИП ОПЕРАЦИИ</div>
+            <div class="ttu ossb">ВАЛЮТА</div>
+            <div class="ttu ossb">ЦЕНА</div>
+            <div class="ttu ossb">КОЛИЧЕСТВО</div>
+            <div class="ttu ossb">СТОИМОСТЬ</div>
+        </div>
+        {% for operation in  portfolio.portfolio_operations.all %}
+        <div class="history_line">
+            <div>{{ operation.date }} </div>
+            <div>{{ operation.asset.name }} </div>
+            <div>{{ operation.type }}</div>
+            <div>{{ operation.asset.currency.name }}</div>
+            <div>{% if operation.price %}{{ operation.price }}{% endif %}</div>
+            <div>{% if operation.count %}{{ operation.count }}{% endif %}</div>
+            <div>{{ operation.cost }}</div>
+            <i data-id="{{ operation.id }}" data-name="operation_history" class="fas fa-trash-alt js-modal-inner remove"
+            data-mfp-src="#delete_operation_confirm_modal"></i>
+            {#                <a href="{% url 'account-operations-delete' operation.pk %}" class="blue_btn close_history"></a>#}
+        </div>
+        {% endfor %}
+    </div>
+</div>

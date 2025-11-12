@@ -1,0 +1,78 @@
+.risk_start_h1 {
+    font-family: "OpenSans-Bold";
+    font-style: normal;
+    font-size: 25px;
+    line-height: 34px;
+    letter-spacing: 0.025em;
+    margin-bottom: 10px;
+    color: #F1F2F4;
+}
+
+.risk_start_text {
+    font-family: "OpenSans-Light";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 160.18%;
+    letter-spacing: 0.025em;
+    color: #F1F2F4;
+}
+
+.risk_start_text + .risk_start_h2 {
+    margin-top: 35px;
+}
+
+.risk_start_h2 {
+    font-family: "OpenSans-Regular";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 29px;
+    letter-spacing: 0.025em;
+    color: #F1F2F4;
+    margin-bottom: 10px;
+
+}
+
+.risk_div_result {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.absolute_figures table tr:nth-child(1) td,
+.absolute_figures table tr:nth-child(2) td {
+    font-size: 11px;
+}
+
+#risk_table td {
+    font-size: 12px;
+    padding: 10px 7px;
+}
+
+@media (max-width: 991px) {
+    #risk_table td {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .risk_start_h1 {
+        font-size: 22px;
+        line-height: 29px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .risk_start_h2 {
+        text-align: center;
+    }
+
+    .risk_start_text {
+        font-size: 13px!important;
+        line-height: 18px;
+    }
+
+    #risk_table {
+        width: 600px;
+    }
+}

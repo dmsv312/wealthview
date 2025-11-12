@@ -1,0 +1,37 @@
+{% load static %}
+
+<div id="login_block" class="mfp-hide b-modal-login b-modal-default">
+    <div class="login_block_title">
+        Авторизация
+        <button type="button" class="mfp-close"></button>
+    </div>
+    <div class="login_form_block">
+        <form action="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="login_form" method="post">
+            {% csrf_token %}
+            <label>Email *</label>
+            <input type="email" name="login" placeholder="Введите ваш email" required>
+            <label>Пароль *</label>
+            <input type="password" name="password" placeholder="Введите ваш пароль" required>
+            {% if login_error %}
+                <label class="text-danger">{{ login_error }}</label>
+            {% endif %}
+            <button type="submit">Войти</button>
+            <div class="remember_lost_line">
+                <div>
+                    <label class="checkbox">
+                        <input type="checkbox"/>
+                        <div class="checkbox__text">Запомнить меня</div>
+                    </label>
+                </div>
+                <div><a class="js-modal" href="#forget_password_block">Забыли пароль?</a></div>
+            </div>
+        </form>
+    </div>
+    <div class="register_block">
+                <span class="register_title">
+                    НЕТ АККАУНТА ?
+                </span>
+        <p>Регистрация на нашем сайте позволит Вам получить доступ к вашему личному кабинету.</p>
+        <div class="register_href"><a class="js-modal" href="#register_block">Регистрация</a></div>
+    </div>
+</div>

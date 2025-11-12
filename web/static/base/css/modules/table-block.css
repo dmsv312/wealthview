@@ -1,0 +1,33 @@
+.table_block {
+    width: 100%;
+}
+
+.table_block table {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.table_block table td {
+    padding: 10px 7px 10px 13px;
+}
+
+.dfaicjcsb {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dfaic {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+}

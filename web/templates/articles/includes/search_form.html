@@ -1,0 +1,13 @@
+{% load static %}
+
+<div class="search_block">
+    <form class="search_form" action="{% url 'search_articles' %}" method="post">
+        {% csrf_token %}
+        {% if search_req %}
+            <input id="search_input" name="search_req" type="text" placeholder="Поиск..." value={{ search_req }}>
+        {% else %}
+            <input id="search_input" name="search_req" type="text" placeholder="Поиск...">
+        {% endif %}
+        <img id="search_btn" src="{% static 'base/img/icon-search.svg' %}" alt="">
+    </form>
+</div>

@@ -1,0 +1,16 @@
+{% load static %}
+{% load account %}
+<div id="delete_portfolio_modal" style="text-align: center;" class="mfp-hide b-modal-ctn b-modal-ctn_sm">
+    <button type="button" class="mfp-close"></button>
+    <div class="modal_title">
+        Удаление портфеля
+        <div></div>
+    </div>
+    <div class="modal_content">
+        <p style="font-size: 13px;">Вы действительно хотите удалить портфель?</p>
+        <a id="portfolio_delete_href" onclick="start_preloader();"
+           style="cursor: pointer; background: #D752D8; padding-left: 50px; padding-right: 50px;" class="blue_btn">Да</a>
+        <a href="#modal_change_portfolio" id="no_delete_portfolio" style="margin-left: 15px; cursor: pointer; padding-left: 50px; padding-right: 50px;"
+           class="blue_btn js-modal-inner">Нет</a>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+/* table_matrix */
+.table_matrix {
+    margin-left: -30px;
+    margin-right: -30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: auto;
+}
+
+.table_matrix table td {
+    padding: 10px 7px;
+}
+
+.table_matrix table td:nth-child(1) {
+    min-width: 170px;
+    max-width: 170px;
+}
+
+.table_matrix table td {
+    min-width: 50px;
+    max-width: 50px;
+}

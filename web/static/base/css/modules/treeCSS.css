@@ -1,0 +1,107 @@
+.treeCSS,
+.treeCSS ul,
+.treeCSS li {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    list-style: none;
+}
+
+.treeCSS {
+    margin-left: 26px;
+    color: #61646f;
+    font-family: "OpenSans-Regular", sans-serif;
+    font-size: 13px;
+    margin-bottom: 60px;
+}
+
+.treeCSS_mod {
+    margin-bottom: 0px;
+}
+
+.treeCSS ul {
+    margin: 0 0 0 0.5em; /* вести линию вниз где-то с полбуквы родителя */
+}
+
+.treeCSS > li:not(:only-child),
+.treeCSS li li {
+    position: relative;
+    padding: 0.2em 0 0 1.2em; /* отступ до текста; для раскрывающегося списка в ряде случаев (в Хроме есть баг) padding-top (.2em) лучше указывать в px */
+}
+
+.treeCSS li:not(:last-child) {
+    border-left: 1px solid #61646f; /* толщина, цвет и стиль (вместо сплошной пунктирная или точечная) вертикальной линии */
+}
+
+.treeCSS li li:before,
+.treeCSS > li:not(:only-child):before {
+    /* горизонтальная линия */
+    content: "";
+    position: absolute;
+    top: 13px;
+    left: 0;
+    width: 1.1em; /* не более отступа до текста (1.2em) */
+    height: 0.7em; /* начинается приблизительно с половины высоты буквы (.5em + .2em) */
+    border-bottom: 1px solid #61646f;
+}
+
+.treeCSS li:last-child:before {
+    /* вертикальная линия последнего пункта в каждом списке */
+    width: calc(1.1em - 1px); /* для перфекционистов */
+    border-left: 1px solid #61646f;
+    height: 50%;
+    top: 0;
+}
+
+.treeCSS li li {
+    padding: 15px 0 15px 17px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.treeCSS li li > a {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.treeCSS li i {
+    margin: 0px 5px;
+}
+
+.treeCSS li i.remove:hover {
+    color: #495df3;
+}
+
+.treeCSS li.active,
+.treeCSS li li:hover {
+    color: #fff;
+}
+
+.treeCSS li a div {
+    color: #a8a7aa;
+}
+
+.treeCSS li a.active div,
+.treeCSS li a:hover div {
+    color: #fff;
+}
+
+@media (max-width: 1199px) {
+    .treeCSS {
+        width: calc(100% - 26px);
+    }
+
+    .treeCSS li i {
+        margin-right: 0;
+    }
+
+    .treeCSS li li {
+        padding-right: 0;
+    }
+}

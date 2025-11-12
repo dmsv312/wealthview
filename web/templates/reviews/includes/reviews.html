@@ -1,0 +1,43 @@
+{% load static %}
+{% load pluralize %}
+
+{% for review, is_liked, is_disliked, is_my in reviews_data %}
+    <div class="review">
+        <div class="single_review block_shadow">
+            <div class="left_review">
+                <div class="top_review_line">
+                    <div>
+                        <!--<img src="{% static 'base/img/user_icon.png' %}" alt="">-->
+                        <i class="fas fa-user-circle"></i>
+                        <span class="name {% if is_my %} user_review{% endif %}">{{ review.author.get_full_name }}</span>
+                        <span class="date">{{ review.date|date:"d E Y, H:i"|lower }}</span>
+                    </div>
+                    <div>
+                        <span>{{ review.get_type_display }} {{ review.status }}</span>
+                    </div>
+                </div>
+                <div class="review_content">
+                    <span class="review_title">{{ review.title }}</span>
+                    <p>{{ review.content }}</p>
+                </div>
+                <div class="comment_line">
+                    <!--<img src="{% static 'base/img/comment_icon.png' %}" alt="">-->
+                    <i class="far fa-comment"></i>
+                    <div class="show_comment comment_counter" data-src="counter">
+                        {{ review.get_count_of_published_comments }} {{ review.get_count_of_published_comments|rupluralize:"комментарий, комментария, комментариев" }}
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="right_review">
+                {% include 'reviews/includes/rating_block.html' %}
+            </div>
+            <div class="show_comment comment_slider" data-src="slider">
+                <img src="{% static 'base/img/arrow_top_black.svg' %}" class="scblack" alt="">
+                <img src="{% static 'base/img/arrow_bottom_white.png' %}" class="scwhite" alt="">
+            </div>
+        </div>
+        {% include 'reviews/includes/comments.html' %}
+    </div>
+{% endfor %}

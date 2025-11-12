@@ -1,0 +1,78 @@
+{% extends "wrapper.html" %}
+{% load static %}
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+        <script src="{% static "base/js/switch_all_page.js" %}"></script>
+        <script src="{% static "articles/filter_articles.js" %}"></script>
+        <script src="{% static "articles/search_form.js" %}"></script>
+    {% include 'includes/init_csrf_token.html' %}
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Статьи wealthview.ru</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+    <!-- Прелоадер -->
+    {% include "backtest/input_data/includes/loader.html" %}
+    <div class="all_title_block">
+        <h1>Статьи</h1>
+    </div>
+    <div class="breadcrumbs_block">
+        <div class="container">
+            <div class="breadcrumbs_line">
+                <a href="{% url 'main-page' %}">Главная</a>
+                <a href="{% url 'articles-page' %}">Статьи</a>
+            </div>
+        </div>
+    </div>
+    <div class="main_content">
+        <div class="container">
+            <div class="common_art_block">
+                {% include "articles/includes/category-select.html" %}
+                <div class="left_cat_sidebar">
+                    <div>
+                        {% include "articles/includes/category_nav.html" %}
+                    </div>
+                </div>
+                <div class="right_content_sidebar">
+                    {% if search_req %}
+                        {% if articles_data %}
+                            <h2 style="text-align: center;margin: 0 0 30px 0;">Статьи по запросу «{{ search_req }}»</h2>
+                        {% else %}
+                            <h2 style="text-align: center;margin: 0 0 30px 0">Статей по запросу «{{ search_req }}» не
+                                найдено</h2>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if articles_data %}
+                        <div id="articles_block">
+                            {% include "articles/includes/articles.html" %}
+                        </div>
+                    {% else %}
+                        {% if not search_req %}
+                            <h2 class="info_header">Статей не найдено.</h2>
+                        {% endif %}
+                    {% endif %}
+
+
+                    {% if has_next %}
+                        <a id="lazyLoadLink" href="javascript:void(0);" class="more_articles"
+                           data-page="2" data-block="#articles_block" data-url="{% url 'lazy_load_articles' %} ">
+                            показать еще
+                            <img src="{% static 'base/img/more_articles.svg' %}" alt="">
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    <div id="overlay" class="simple_page"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+    {% include "auth_sys/includes/mobile_menu.html" %}
+    <script src="{% static "lazy_pagination/page_lazy_load.js" %}"></script>
+{% endblock %}
+

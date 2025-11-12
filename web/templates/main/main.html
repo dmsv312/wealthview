@@ -1,0 +1,121 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+{% block extra_import %}
+    <meta property="og:title" content="Сервис для управления инвестиционным портфелем"/>
+    <meta property="og:description" content="Wealth View – это веб-сервис для работы с инвестиционным портфелем на
+    фондовом рынке. Наши технологические решения помогают частным инвесторам и инвестиционным советникам повысить
+    эффективность принимаемых решений. Мы взяли на себя расчеты, аналитику и многое другое, чтобы Вы могли экономить
+    свое время для более важных задач."/>
+    <meta id="og_image" property="og:image" content="/media/media/img/articles/users/28_d9bINF0.jpg"/>
+    <meta property="og:type" content="website"/>
+    <meta id="og_url" property="og:url" content="" />
+    <script>
+        let og_url = document.getElementById("og_url");
+        og_url.setAttribute("content", window.location.origin.toString() + og_url.getAttribute("content"));
+        let og_image = document.getElementById("og_image");
+        og_image.setAttribute("content", window.location.origin.toString() + og_image.getAttribute("content"));
+    </script>
+{% endblock %}
+
+{% block title %}
+    <title>Сервис для управления инвестиционным портфелем</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="top_title_block av-promo" style="background-image: url({% static 'base/img/main_block_title1.png' %})">
+        <!-- Прелоадер -->
+        {% include "backtest/input_data/includes/loader.html" %}
+        <div class="container">
+            <div class="main_title_block">
+                <h1>Wealth View</h1>
+                <p>Эффективные решения для управления инвестиционным портфелем</p>
+                <a id="rprofile_main_btn" href="{% url 'risk-page' %}" class="blue_btn"
+                onclick="ga('send','event','btn','rprofile_main_btn');ym(67583128,'reachGoal','rprofile_main_btn'); return true;">Сформировать портфель</a>
+            </div>
+            <div class="arrow bounce">
+                <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <div class="main_content av-main_content">
+        <div class="container">
+            <div class="about_block">
+                <img src="{% static 'base/img/note.png' %}" alt="">
+                <div class="sd_title_block">
+                    <span>ЭФФЕКТИВНЫЕ РЕШЕНИЯ ИНВЕСТИЦИОННЫХ ЗАДАЧ</span>
+                    <h1>О проекте</h1>
+                </div>
+                <div class="sd_desc">
+                    <p>
+                        <strong>Wealth View</strong> – это веб-сервис для работы с инвестиционным портфелем на фондовом рынке.
+                        Наши технологические решения помогают частным инвесторам и инвестиционным советникам повысить эффективность
+                        принимаемых решений. Мы взяли на себя расчеты, аналитику и многое другое, чтобы Вы могли экономить свое время
+                        для более важных задач.
+                    </p>
+                </div>
+                <div class="about_line">
+                    <div>
+                        <img src="{% static 'base/img/icon1.svg' %}" alt="">
+                        <span>Риск-профиль </span>
+                        <p>Определяет Ваше отношение и возможность принятия риска</p>
+                        <a id="rprofile_btn" href="{% url 'risk-page' %}" class="blue_btn"
+                        onclick="ga('send','event','btn','rprofile_btn');ym(67583128,'reachGoal','rprofile_btn'); return true;">Риск-профиль</a>
+                    </div>
+                    <div>
+                        <img src="{% static 'base/img/icon2.svg' %}" alt="">
+                        <span>Бэк-тест портфеля</span>
+                        <p>Помогает изучить влияние диверсификации на результат</p>
+                        <a id="backtest_btn" href="{% url 'backtest-input-page' %}" class="blue_btn"
+                        onclick="ga('send','event','btn','backtest_btn');ym(67583128,'reachGoal','backtest_btn'); return true;">Бэк-тест</a>
+                    </div>
+                    <div>
+                        <img src="{% static 'base/img/icon3.svg' %}" alt="">
+                        <span>Личный кабинет</span>
+                        <p>Позволяет управлять инвестиционным портфелем</p>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'account-page' %}" class="blue_btn">Личный кабинет</a>
+                        {% else %}
+                        <a href="#register_block" style="margin-right: 30px;" class="blue_btn js-modal">Зарегистрироваться</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="articles_block">
+                <div>
+                    {% for article in articles_list %}
+                        <div class="article">
+                            <div class="thumbnail">
+                                <img src="{{ article.thumbnail.url }}" alt="">
+                                <span>{{ article.title }}</span>
+                            </div>
+                            <div class="article_content">
+                                <div class="date_line">
+                                    {{ article.date|date:"d.m.y" }}
+                                </div>
+                                <div class="article_text">
+                                    {{ article.description|truncatechars:142 }}
+                                </div>
+                            </div>
+                            <a href="{% url 'article-page' article.category.slug article.slug %}" class="blue_btn">Читать статью</a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <a href="{% url 'articles-page' %}" class="more_articles">
+                    показать еще
+                    <img src="{% static 'base/img/more_articles.svg' %}" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additional %}
+    <div id="overlay" class="simple_page"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+    {% include "auth_sys/includes/mobile_menu.html" %}
+{% endblock %}
+
+

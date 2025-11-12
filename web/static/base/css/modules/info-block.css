@@ -1,0 +1,102 @@
+.info_block:before {
+    content: "";
+    position: absolute;
+    border: 10px solid transparent;
+    border-bottom: 10px solid #22273a;
+    top: -20px;
+    left: 20px;
+}
+
+.info_block {
+    display: none;
+    position: absolute;
+    background: #22273a;
+    z-index: 9999;
+    width: 480px;
+    left: -20px;
+    top: 17px;
+}
+
+.info_block > div {
+    padding: 20px 20px 20px 30px;
+    width: 100%;
+}
+
+.info_common_block {
+    position: relative;
+}
+.info_block_overlay::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 9000;
+}
+.info_block_title {
+    border-bottom: 1px solid #747886;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    font-family: "OpenSans-Bold", sans-serif;
+    text-transform: uppercase;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.info_block_title img {
+    width: 15px;
+    height: 15px;
+    right: 6px;
+    top: 6px !important;
+}
+
+.info_block_text p {
+    font-size: 13px;
+    line-height: 22px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.info_block_text p:last-child {
+    margin-bottom: 0;
+    font-family: 'OpenSans-Regular';
+}
+
+.info, .info1 {
+    width: 19px;
+    height: 19px;
+    cursor: pointer;
+}
+
+/* ToDo что за медиа запрос такой */
+@media (min-width: 1201px) {
+    .info_block_title img {
+        right: 17px;
+        top: 17px !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .info_block>div {
+        padding: 7px;
+    }
+
+    .info_block_text p {
+        margin-bottom: 0;
+        font-size: 10px;
+        line-height: 14px;
+    }
+
+    .info_block {
+        width: 300px;
+    }
+}

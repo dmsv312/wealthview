@@ -1,0 +1,37 @@
+#!/bin/sh
+
+choice=""
+
+while [ "$choice" != "q" ]
+do
+        echo
+        echo "Please select action"
+        echo "1) LOCAL: Start"
+        echo "2) LOCAL: Reload web"
+        echo "3) DEVELOP: Start"
+        echo "4) DEVELOP: Reload web"
+        echo "5) PRODUCTION: Start"
+        echo "6) PRODUCTION: Reload web"
+#	echo "41) DEBUG: Makemigrations"
+#        echo "42) DEBUG: Migrate"
+	
+	    echo "100) Docker logs"
+        echo "q) Quit"
+        echo
+
+        read choice
+
+        case $choice in
+            '1') echo "LOCAL: Start..." && docker-compose -f docker-compose-local.yml up -d && docker-compose -f docker-compose-local.yml exec web supervisord -c /etc/supervisor/conf.d/celery.conf --loglevel=DEBUG;;
+            '2') echo "LOCAL: Reload web..." && docker-compose -f docker-compose-local.yml restart web && docker-compose -f docker-compose-local.yml exec web supervisord -c /etc/supervisor/conf.d/celery.conf --loglevel=DEBUG;;
+            '3') echo "DEVELOP: Start..." && docker-compose -f docker-compose-develop.yml up -d && docker-compose -f docker-compose-develop.yml exec web supervisord -c /etc/supervisor/conf.d/celery.conf --loglevel=DEBUG;;
+            '4') echo "DEVELOP: Reload web..." && docker-compose -f docker-compose-develop.yml restart web && docker-compose -f docker-compose-develop.yml exec web supervisord -c /etc/supervisor/conf.d/celery.conf --loglevel=DEBUG;;
+            '5') echo "PRODUCTION: Start..." && docker-compose -f docker-compose-production.yml up -d && docker-compose -f docker-compose-production.yml exec web supervisord -c /etc/supervisor/conf.d/celery.conf --loglevel=DEBUG;;
+            '6') echo "PRODUCTION: Reload web..." && docker-compose -f docker-compose-production.yml restart web && docker-compose -f docker-compose-production.yml exec web supervisord -c /etc/supervisor/conf.d/celery.conf --loglevel=DEBUG;;
+#	   '41') echo "DEBUG: Makemigrations..." && docker-compose exec web python manage.py makemigrations;;
+#			'42') echo "DEBUG: Migrate..." && docker-compose exec web python manage.py migrate;;
+		'100') echo "Logs..." && docker-compose -f docker-compose-local.yml logs -f --tail=100 web;;
+            'q') echo "quiting!";;
+            *)   echo "menu item is not available; try again!";;
+        esac
+done

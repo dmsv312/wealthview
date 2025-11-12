@@ -1,0 +1,38 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Сохранить результаты | Бэк-тест </title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+    <div class="container">
+            <div class="bag_nav_line">
+                {% include 'backtest/includes/backtest_text_line.html' %}
+                <div class="circle_line save_rezult_circle_line">
+                    <i class="fas fa-circle"></i>
+                    <i class="fas fa-circle"></i>
+                    <i class="fas fa-circle"></i>
+                    <hr>
+                </div>
+
+            </div>
+            <div class="content_block bag">
+                <div class="save_result_block">
+                    <span>Lorem Ipsum Dolor</span>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
+                    <a href="#save_result" class="blue_btn ">Lorem ipsum</a>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    <div id="overlay"></div>
+    {% include "auth_sys/includes/auth_modal.html" %}
+    {% include "includes/modal_mobile_horiz.html" %}
+{% endblock %}

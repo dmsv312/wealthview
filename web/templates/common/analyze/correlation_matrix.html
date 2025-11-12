@@ -1,0 +1,32 @@
+{% load backtest %}
+<div class="matrix_block in_shad in_shad_pad bag_block">
+    <div class="bag_title_line">
+        <div class="bag_block_title">
+            матрица корреляций
+        </div>
+    </div>
+    <div class="table_block table_matrix">
+        <table>
+            <tr>
+                <td class="tac ossb bg_td_dark">Имя</td>
+                <td class="tac ossb bg_td_dark">Тикер</td>
+                {% for element in portfolio_analysis_data.corr_matrix %}
+                    <td class="tac ossb bg_td_dark">{{ element.ticker }}</td>
+                {% endfor %}
+                <td class="tac ossb bg_td_dark">σ, %</td>
+                <td class="tac ossb bg_td_dark">β</td>
+            </tr>
+            {% for element in portfolio_analysis_data.corr_matrix %}
+                <tr>
+                    <td>{{ element.name }}</td>
+                    <td>{{ element.ticker }}</td>
+                    {% for corr_value in element.corr_values %}
+                        <td class="m_blue">{{ corr_value| smart_round }}</td>
+                    {% endfor %}
+                    <td>{{ element.vol_tickers_and_bench| smart_round }}%</td>
+                    <td>{{ element.beta_tickers_and_bench| smart_round }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

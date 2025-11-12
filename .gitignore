@@ -1,0 +1,18 @@
+*.pyc
+*.pyo
+.idea
+/postgre/data
+/postgre/archive.tgz
+/web/media
+
+# Virtual env
+venv/
+.venv
+
+outdated.log
+requests.json.log
+main.json.log
+web/dump.json
+
+celerybeat-schedule.db
+

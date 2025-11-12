@@ -1,0 +1,155 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% load backtest %}
+
+<!------------------- EXTRA SCRIPTS ------------>
+{% block extra_import %}
+    <script src="{% static 'base/js/jquery.maskedinput.min.js' %}"></script>
+    {% include 'includes/init_csrf_token.html' %}
+{% endblock %}
+{% block extra_style %}
+    <link rel="stylesheet" href="{% static 'base/css/alert.css' %}">
+    <link rel="stylesheet" href="{% static "backtest/highcharts.css" %}">
+    {% if portfolio_analysis_data.stats_param %}
+        {% include 'common/analyze/includes/stats_params_styles.html' %}
+    {% endif %}
+{% endblock %}
+<!------------------- PAGE TITLE --------------->
+{% block title %}
+    <title>Бэк-тест портфеля</title>
+{% endblock %}
+<!------------------- CONTENT ------------------>
+{% block content %}
+    <!-- Прелоадер -->
+    {% include "backtest/input_data/includes/loader.html" %}
+    <div class="container">
+        <div class="bag_nav_line">
+        </div>
+        <div class="content_block bag">
+            <div class="sd_block">
+                <div class="sd_title_block">
+                    <h1>Бэк-тест портфеля</h1>
+                </div>
+            {% if error_text %}
+                <a href="#analyze_page" id="analyze_href"></a>
+            {% endif %}
+                <div class="sd_desc">
+                    <p>Позволяет проанализировать поведение заданного портфеля на историческом периоде, чтобы сформировать правильные
+                        ожидания относительно риска, доходности и взаимосвязи активов. Позволяет наглядным образом увидеть эффект
+                        диверсификации при инвестировании в различные классы активов.</p>
+                </div>
+                <div class="sd_form_block">
+                    <form id="sd_form" class="lu" method="get" action="{% url "backtest-analyze-page" %}"
+                    onsubmit="return validate_submit_backtest()">
+                        <div class="sd_line_1 sd_line">
+                            {% include "backtest/input_data/includes/base_data.html" %}
+                        </div>
+                        <div class="sd_line_2 sd_line">
+                            {% include "backtest/input_data/includes/benchmarks_data.html" %}
+                        </div>
+                        <div class="sd_line_3 sd_line" style="margin-bottom: 0;">
+                            {% include "backtest/input_data/includes/assets_data.html" %}
+                        </div>
+                        <div class="save_rez_line" style="padding-top: 0;">
+                            <input id="submit_portfolio" class="btn blue_btn submit_input" type="submit"
+                                   value="Анализировать портфель">
+                        </div>
+                    </form>
+                </div>
+                <p></p><p></p>
+            {% if not error_text %}
+                <a href="#analyze_page" id="analyze_href"></a>
+                {% include 'includes/messages_block.html' %}
+                {% if not error %}
+                    {% include 'backtest/analyze/base_info.html' %}
+                {% endif %}
+                </div>
+            {% endif %}
+            </div>
+
+        </div>
+    </div>
+    <a id="feedback_button" style="border: 0px; width: 50px; height: 50px; padding: 0px; z-index: 1000; cursor: pointer!important;" class="feedback_btn start_test"><img id="feedback_img" style="width: 100%; " src="{% static 'base/img/message.png' %}"/></a>
+    <div id="feedback_menu" class="feedback_div" style="display: inline-block; text-align: center; z-index: 1000; visibility: visible;">
+        <p style="font-weight: bold;" >Написать в мессенджер</p>
+        <div style="width: 45%; display: inline-block;" >
+            <a id="telegram_img" href="https://t.me/WealthView" style="border: 0px; width: 50px; height: 50px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/telegram.png' %}"/></a>
+            <label style="display: block; font-size: 10px; padding-top: 5px;">Telegram</label>
+        </div>
+        <div style="width: 45%; display: inline-block;" >
+            <a id="whatsapp_img" href="https://wa.me/79217931335" style="border: 0px; width: 50px; height: 50px; padding: 0px; cursor: pointer!important; display: none;" class="start_test"><img style="width: 100%;" src="{% static 'base/img/wa.png' %}"/></a>
+            <label style="display: block; font-size: 10px; padding-top: 5px;">WhatsApp</label>
+        </div>
+    </div>
+{% endblock %}
+<!------------------- ADDITIONAL --------------->
+{% block additional %}
+    {% include "auth_sys/includes/mobile_menu.html" %}
+    <div id="overlay"></div>
+    {% include 'includes/modal_mobile_horiz.html' %}
+    <script src="{% static "base/js/alert.js" %}"></script>
+    {% include "backtest/input_data/includes/modal_add_active.html" %}
+    {% include "backtest/analyze/includes/modal_compare_asset.html" %}
+    {% include "auth_sys/includes/auth_modal.html" %}
+    {% include "backtest/analyze/includes/error_backtest_modal.html" %}
+    {% if not error_text %}
+        <script type="text/javascript">
+            var backtest_analyze_data = JSON.parse("{{data|escapejs}}");
+        </script>
+    {% endif %}
+    <script type="text/javascript" src="{% static "utils/forms.js" %}"></script>
+    <script type="text/javascript" src="{% static "utils/validate.js" %}"></script>
+    <script type="text/javascript" src="{% static "auth_sys/validate.js" %}"></script>
+    <script type="text/javascript" src="{% static 'backtest/input_data/loader.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backtest/input_data/validate.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backtest/input_data/asset_manager.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backtest/input_data/modal_effects_backtest.js' %}"></script>
+    <script type="text/javascript" src="{% static 'autocomplete/js/autocomplete.js' %}"></script>
+    <script type="text/javascript">
+        var active = false;
+        var feedback_button = document.getElementById("feedback_button"); 
+        var feedback_menu = document.getElementById("feedback_menu");    
+        var feedback_img = document.getElementById("feedback_img");    
+        var telegram_img = document.getElementById("telegram_img");  
+        var whatsapp_img = document.getElementById("whatsapp_img");  
+
+        feedback_menu.style.visibility = "hidden";
+        
+        feedback_button.addEventListener("click", function(){
+            if (active == false) {
+                telegram_img.style.display = "";
+                whatsapp_img.style.display = "";
+                active = true;
+                feedback_menu.style.visibility = "visible";
+                feedback_img.src = "{% static 'base/img/message_close.png' %}";
+            }
+            else {
+                telegram_img.style.display = "none";
+                whatsapp_img.style.display = "none";
+                active = false;
+                feedback_menu.style.visibility = "hidden";
+                feedback_img.src = "{% static 'base/img/message.png' %}";
+            }
+        });
+    </script>
+    {% if analyze_data %}
+        <script type="text/javascript">
+            let sum = sum_shares();
+            $("#total_share").val(sum).trigger("change");
+        </script>
+    {% endif %}
+    {% if error_text %}
+        <script type="text/javascript">
+            $.magnificPopup.open({
+                            mainClass: 'b-modal-inner',
+                            items: {
+                                src: '#error_backtest_modal'
+                            },
+                            type: 'inline'
+                        }, 0);
+        </script>
+    {% endif %}
+    {% if not error_text %}
+        {% include 'backtest/analyze/includes/charts.html' %}
+    {% endif %}
+{% endblock %}

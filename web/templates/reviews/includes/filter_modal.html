@@ -1,0 +1,83 @@
+{% load static %}
+<div id="filter_modal" class="modal_block bg_light">
+    <div class="modal_title">
+        ФИЛЬТР
+    </div>
+    <div class="modal_content">
+        <form action="" method="get" id="form_switcher">
+
+            <div class="filter_choose_block">
+                <div>
+                    <span>Тип:</span>
+                    <div class="checkbox_column">
+                        {% for type_val, type_text in filter.form.type.field.choices %}
+                            <label for="id_type_{{ forloop.counter0 }}" class="checkbox">
+                                <input class="review_filter_field" type="radio" name="type"
+                                       value="{{ type_val }}" id="id_type_{{ forloop.counter0 }}"
+                                       {% if type_val == "ID" %}checked{% endif %}>
+
+                                <div class="checkbox__text">{{ type_text }}</div>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <span>Статус:</span>
+                    <div class="checkbox_column">
+                        {% for status_val, status_text in filter.form.status.field.choices %}
+                            <label for="id_status_{{ forloop.counter0 }}" class="checkbox">
+                                <input class="review_filter_field" type="checkbox" name="status"
+                                       value="{{ status_val }}" id="id_status_{{ forloop.counter0 }}">
+                                <div class="checkbox__text">{{ status_text|capfirst }}</div>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <span>Время создания:</span>
+                    <div class="checkbox_column">
+                        <label for="id_date_range_0" class="checkbox">
+                            <input class="review_filter_field" type="radio" name="date_range"
+                                   value="today" id="id_date_range_0">
+                            <div class="checkbox__text">Сегодня</div>
+                        </label>
+                        <label for="id_date_range_1" class="checkbox">
+                            <input class="review_filter_field" type="radio" name="date_range"
+                                   value="week" id="id_date_range_1">
+                            <div class="checkbox__text">За неделю</div>
+                        </label>
+                        <label for="id_date_range_2" class="checkbox">
+                            <input class="review_filter_field" type="radio" name="date_range"
+                                   value="month" id="id_date_range_2">
+                            <div class="checkbox__text">За месяц</div>
+                        </label>
+                        <label for="id_date_range_3" class="checkbox">
+                            <input class="review_filter_field" type="radio" name="date_range"
+                                   value="all" id="id_date_range_3">
+                            <div class="checkbox__text">За все время</div>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal_submit">
+                {#                <a href="#" class="blue_btn login_btn">ОТПРАВИТЬ</a>#}
+                <input class="blue_btn submit_input" type="submit" value="ОТПРАВИТЬ"/>
+            </div>
+        </form>
+    </div>
+    <img src="{% static 'base/img/close_light.png' %}" alt="" class="modal_close close_btn">
+</div>
+<div id="com_added" class="modal_block bg_light">
+    <div class="modal_title">
+        Ваш комментарий был успешно оставлен! Он будет опубликован после модерации
+    </div>
+    <img src="{% static 'base/img/close_light.png' %}" alt="" class="modal_close close_btn">
+</div>
+<div id="review_added" class="modal_block bg_light">
+    <div class="modal_title">
+        Ваш отзыв был отправлен администрации! <br> Он появится в общем списке после модерации
+    </div>
+    <img src="{% static 'base/img/close_light.png' %}" alt="" class="modal_close close_btn">
+</div>

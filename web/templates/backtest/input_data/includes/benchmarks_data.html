@@ -1,0 +1,28 @@
+{% load static %}
+<div>
+    <label>
+        Бенчмарк
+        <div class="info_common_block">
+            <span class="js-tooltip" data-tooltip-content="#tooltip_bench">
+                 <img src="/staticfiles/base/img/info.svg" alt="">
+            </span>
+        </div>
+    </label>
+    <div class="select_line change_portfolio" style="display: block; margin-bottom: 35px;">
+        <div id="benchmark_selectBox" class="selectBox" style="text-transform: none;">
+            <img src="{% static 'base/img/arrow_1.svg' %}" alt="" width='15px' class="arrow"/>
+            {% if analyze_data %}
+                <p id="benchmark_p" class=valueTag name=select>{{ analyze_data.benchmark_name }}</p>
+                <input id="benchmark_input" type="hidden" name="benchmark" data-pk="{{ analyze_data.benchmark_id }}" value={{ analyze_data.benchmark_name }}>
+            {% else %}
+                <p id="benchmark_p" class=valueTag name=select>{{ benchmarks.0.name }}</p>
+                <input id="benchmark_input" type="hidden" name="benchmark" data-pk="{{ benchmarks.0.id }}" value={{ benchmarks.0.name }}>
+            {% endif %}
+            <ul class="selectMenuBox">
+                {% for benchmark in benchmarks %}
+                    <li class="option benchmarks_data" data-pk="{{ benchmark.id }}">{{ benchmark.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

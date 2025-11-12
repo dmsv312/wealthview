@@ -1,0 +1,11 @@
+{% load static %}
+
+<select id="articles_select" class="custom-select category-select">
+    {% for category in categories %}
+        {% if category.title == filter_category.title or category.title == article.category.title %}
+            <option id="{{ category.slug }}" selected="selected">{{ category.title }}</option>
+        {% else %}
+            <option id="{{ category.slug }}">{{ category.title }}</option>
+        {% endif %}
+    {% endfor %}
+</select>

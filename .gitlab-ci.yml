@@ -1,0 +1,96 @@
+image: alpine
+
+services:
+  - postgres:10-alpine
+
+variables:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: ""
+  POSTGRES_PORT: 5432
+  POSTGRES_HOST_AUTH_METHOD: trust
+  DATABASE_NAME: $POSTGRES_DB
+  DATABASE_USER_NAME: $POSTGRES_USER
+  DATABASE_PASSWORD: $POSTGRES_PASSWORD
+  DATABASE_HOST: $POSTGRES_DB
+  DATABASE_PORT: $POSTGRES_PORT
+
+stages:
+  - test
+  - archive
+  - deploy_dev
+  - deploy_prod
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - ~/.cache/pip/
+
+test:
+  stage: test
+  image: python:3.7
+  before_script:
+    - 'which git || ( apk update && apk add git )'
+    - pip install -r web/requirements.txt
+  script:
+    - cd web && python manage.py test
+  only:
+    - develop
+    - master
+
+archive:
+  stage: archive
+  before_script:
+    - 'which zip || ( apk update && apk add zip )'
+  script:
+    - zip code.zip -r .
+  artifacts:
+    paths:
+    - code.zip
+    expire_in: 1 hour
+
+deploy_dev:
+  stage: deploy_dev
+  script:
+    - 'which rsync || ( apk update && apk add rsync )'
+    - 'which ssh-agent || ( apk update && apk add openssh-client )'
+    - eval $(ssh-agent -s)
+    - echo "$DEV_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh -p22 root@$DEV_SERVER_IP "rm -rf ~/project && mkdir -p ~/project"
+    - rsync -avH code.zip -e ssh root@$DEV_SERVER_IP:~/project/code.zip
+    - ssh -p22 root@$DEV_SERVER_IP "cd project && unzip -qu code.zip && rm code.zip"
+    - ssh -p22 root@$DEV_SERVER_IP "cd project && chmod +x container-utility.sh"
+    - ssh -p22 root@$DEV_SERVER_IP "cd project && bash container-utility.sh --purge"
+    - ssh -p22 root@$DEV_SERVER_IP "cd project && docker-compose -f docker-compose-develop.yml up -d --build"
+    - sleep 10s
+    - ssh -p22 root@$DEV_SERVER_IP "docker exec -d web python manage.py collectstatic --noinput --clear"
+    - ssh -p22 root@$DEV_SERVER_IP "docker exec -d web python manage.py migrate"
+  only:
+    - develop
+
+deploy_prod:
+  stage: deploy_prod
+  when: manual
+  script:
+    - 'which rsync || ( apk update && apk add rsync )'
+    - 'which ssh-agent || ( apk update && apk add openssh-client )'
+    - eval $(ssh-agent -s)
+    - echo "$PROD_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh -p22 root@$PROD_SERVER_IP "rm -rf ~/project && mkdir -p ~/project"
+    - rsync -avH code.zip -e ssh root@$PROD_SERVER_IP:~/project/code.zip
+    - ssh -p22 root@$PROD_SERVER_IP "cd project && unzip -qu code.zip && rm code.zip"
+    - ssh -p22 root@$PROD_SERVER_IP "cd project && chmod +x container-utility.sh"
+    - ssh -p22 root@$PROD_SERVER_IP "cd project && bash container-utility.sh --reset"
+    - ssh -p22 root@$PROD_SERVER_IP "cd project && docker-compose -f docker-compose-production.yml up -d --build"
+    - sleep 10s
+    - ssh -p22 root@$PROD_SERVER_IP "docker exec -d web python manage.py collectstatic --noinput --clear"
+    - ssh -p22 root@$PROD_SERVER_IP "docker exec -d web python manage.py migrate"
+  only:
+    - master

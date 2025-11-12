@@ -1,0 +1,45 @@
+{% load backtest %}
+<div class="in_shad in_shad_pad graph_price bag_block">
+    <div id="price_change_graph" style="height:max-content"></div>
+</div>
+<div class="bag_col_2 layout-two-cols">
+    <div class="layout-two-cols__left">
+        <div class="in_shad in_shad_pad graph_price bag_block">
+            <div class="bag_title_line">
+                <div class="bag_block_title">
+                    Параметры портфеля на {{ analysis_date }}
+                </div>
+            </div>
+            {% include 'common/analyze/absolute_profit.html' %}
+            {% if portfolio_analysis_data.stats_param %}
+                {% include 'common/analyze/stats_params.html' %}
+            {% else %}
+                <div style="margin-top: 30px; font-size: 18px"> Портфельные коэффициенты и
+                    корреляционная матрица не
+                    рассчитываются для портфелей с периодом
+                    существования менее 30 недель.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="layout-two-cols__right">
+        <div class="graph_price_left">
+            <div class="in_shad in_shad_pad graph_price bag_block graph_price1">
+                <figure class="highcharts-figure">
+                    <div id="cash_by_asset_ticker"></div>
+                </figure>
+            </div>
+        </div>
+        <div class="graph_price_right">
+            <div class="in_shad in_shad_pad graph_price bag_block graph_price2">
+                <figure class="highcharts-figure">
+                    <div id="cash_by_asset_type"></div>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% if portfolio_analysis_data.corr_matrix %}
+    {% include 'common/analyze/correlation_matrix.html' %}
+{% endif %}

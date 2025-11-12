@@ -1,0 +1,45 @@
+{% load static %}
+
+<div class="comments_block">
+    <div class="comments_title">
+        Комментарии:
+    </div>
+    <div class="comments_line">
+        {% for comment in review.comments.all %}
+            {% if comment.is_published %}
+                <div>
+                    <div class="top_review_line">
+                        <div>
+                            <!---<img src="{% static 'base/img/user_icon.png' %}" alt="">--->
+                            <i class="fas fa-user-circle"></i>
+                            <span class="name">{{ comment.author.get_full_name }}</span>
+                            <span class="date">{{ comment.date|date:"d E Y, H:i"|lower }}</span>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="review_content">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% empty %}
+            <h4>Оставьте комментарий первым!</h4>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <div class="comment_reply">
+                <div class="cr_title">
+                    Оставить комментарий:
+                </div>
+                <p class="text-muted"><i>Ваш комментарий появится после модерации</i></p>
+                <form action="{% url 'add-comment' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="review_id" value="{{ review.id }}">
+                    {{ comment_form.content }}
+                    <div class="send_comment">
+                        <input class="blue_btn ttu submit_input" type="submit" value="КОММЕНТИРОВАТЬ">
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+</div>

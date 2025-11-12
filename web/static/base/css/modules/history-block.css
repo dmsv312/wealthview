@@ -1,0 +1,134 @@
+.history_block > div.bg_dark div {
+    background: #1d2130;
+}
+
+.history_block {
+    width: 100%;
+    padding-right: 30px;
+}
+
+.history_line > div {
+    padding: 15px 10px;
+    text-align: center;
+    border: 0.5px solid #45495a;
+    font-size: 10px;
+}
+
+.history_line {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    position: relative;
+}
+
+.history_line > div:nth-child(1) {
+    width: 14%;
+}
+
+.history_line > div:nth-child(2) {
+    width: 30%;
+}
+
+.history_line > div:nth-child(3) {
+    width: 12%;
+}
+
+.history_line > div:nth-child(4) {
+    width: 11%;
+}
+
+.history_line > div:nth-child(5) {
+    width: 11%;
+}
+
+.history_line > div:nth-child(6) {
+    width: 11%;
+}
+
+.history_line > div:nth-child(7) {
+    width: 11%;
+}
+
+.history_line > i {
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    transform: translate(0px, -50%);
+    /*border-bottom: 2px solid #fff;*/
+    padding-bottom: 3px;
+    padding-left: 4px;
+    cursor: pointer;
+}
+
+.history_line > i.active,
+.history_line > i:hover {
+    color: #495df3;
+    border-color: #495df3;
+}
+
+.history_line > a {
+    position: absolute;
+    bottom: -50px;
+    right: 0;
+    z-index: 9999;
+    display: none;
+}
+
+@media (max-width: 1339px) {
+    .history_block_scroll {
+        overflow: auto;
+        margin-left: -35px;
+        margin-right: -35px;
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+
+    .history_block {
+        min-width: 950px;
+        width: calc(100% - 50px);
+        padding-right: 50px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .history_block_scroll {
+        overflow: auto;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .history_block_scroll .history_block {
+        min-width: 900px;
+        padding-right: 50px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .history_block_scroll {
+        overflow: auto;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .history_line>div {
+        padding: 10px 5px;
+        font-size: 10px;
+    }
+
+    .history_line>i {
+        font-size: 8px;
+        right: -20px;
+    }
+
+    .history_block_scroll .history_block {
+        padding-right: 40px;
+        min-width: 900px;
+    }
+}
